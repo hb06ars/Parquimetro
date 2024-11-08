@@ -47,7 +47,6 @@ public class VeiculoEstacionadoService {
             veiculo.setValor(veiculoAtualizado.getValor());
             veiculo.setStatusPagamentoEnum(veiculoAtualizado.getStatusPagamentoEnum());
 
-
             return repository.save(veiculo);
         } else {
             throw new RuntimeException("Veículo com ID " + id + " não encontrado.");
