@@ -1,17 +1,17 @@
 package com.parquimetro.app.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parquimetro.app.service.kafka.producer.KafkaProducer;
 import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.net.URI;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +23,20 @@ public class ParquimetroController {
     @Autowired
     private VeiculoEstacionadoService service;
 
-    @GetMapping("/start")
+    @Autowired
+    private KafkaProducer producer;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Value("${spring.kafka.topic}")
+    private String topico;
+
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> start() {
-        return ResponseEntity.ok("Iniciado.");
+    public ResponseEntity<String> saveorupdate(@RequestBody VeiculoEstacionadoDTO veiculoEstacionadoDTO) throws IOException {
+        String payload = objectMapper.writeValueAsString(veiculoEstacionadoDTO);
+        producer.sendMessage(topico, payload);
+        return ResponseEntity.ok("Tópico enviado.");
     }
 
     @GetMapping("/{id}")
@@ -41,26 +51,6 @@ public class ParquimetroController {
         List<VeiculoEstacionadoDTO> listDTO = list.stream().map(VeiculoEstacionadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
-
-    @PostMapping
-    public ResponseEntity<VeiculoEstacionadoDTO> save(@Valid @RequestBody VeiculoEstacionadoDTO dto) {
-        VeiculoEstacionado newObj = service.save(new VeiculoEstacionado(dto));
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<VeiculoEstacionadoDTO> update(@PathVariable String id, @Valid @RequestBody VeiculoEstacionadoDTO dto) {
-        VeiculoEstacionado newObj = service.update(id, new VeiculoEstacionado(dto));
-        return ResponseEntity.ok().body(new VeiculoEstacionadoDTO(newObj));
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<VeiculoEstacionadoDTO> delete(@PathVariable String id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
 
     /*
     @Cacheable(value = "veiculos", key = "#veiculoId")
