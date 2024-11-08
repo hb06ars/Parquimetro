@@ -32,6 +32,7 @@ public class ParquimetroController {
     @Value("${spring.kafka.topic}")
     private String topico;
 
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> saveorupdate(@RequestBody VeiculoEstacionadoDTO veiculoEstacionadoDTO) throws IOException {
         String payload = objectMapper.writeValueAsString(veiculoEstacionadoDTO);
