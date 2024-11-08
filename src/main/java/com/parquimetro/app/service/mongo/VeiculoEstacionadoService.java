@@ -1,6 +1,6 @@
-package com.parquimetro.app.service.postgres;
+package com.parquimetro.app.service.mongo;
 
-import com.parquimetro.domain.entity.VeiculoEstacionadoEntity;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.postgres.VeiculoEstacionadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +19,24 @@ public class VeiculoEstacionadoService {
         this.repository = veiculoEstacionadoRepository;
     }
 
-    public VeiculoEstacionadoEntity save(VeiculoEstacionadoEntity veiculo) {
+    public VeiculoEstacionado save(VeiculoEstacionado veiculo) {
         return repository.save(veiculo);
     }
 
-    public List<VeiculoEstacionadoEntity> findAll() {
+    public List<VeiculoEstacionado> findAll() {
         return repository.findAll();
     }
 
-    public VeiculoEstacionadoEntity findById(Long id) {
-        Optional<VeiculoEstacionadoEntity> obj = repository.findById(id);
+    public VeiculoEstacionado findById(Long id) {
+        Optional<VeiculoEstacionado> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id));
     }
 
-    public VeiculoEstacionadoEntity update(Long id, VeiculoEstacionadoEntity veiculoAtualizado) {
-        Optional<VeiculoEstacionadoEntity> veiculoExistente = repository.findById(id);
+    public VeiculoEstacionado update(Long id, VeiculoEstacionado veiculoAtualizado) {
+        Optional<VeiculoEstacionado> veiculoExistente = repository.findById(id);
 
         if (veiculoExistente.isPresent()) {
-            VeiculoEstacionadoEntity veiculo = veiculoExistente.get();
+            VeiculoEstacionado veiculo = veiculoExistente.get();
             veiculo.setPlaca(veiculoAtualizado.getPlaca());
             veiculo.setModelo(veiculoAtualizado.getModelo());
             return repository.save(veiculo);

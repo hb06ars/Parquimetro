@@ -1,6 +1,6 @@
 package com.parquimetro.domain.dto;
 
-import com.parquimetro.domain.entity.VeiculoEstacionadoEntity;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
 import lombok.*;
 
 @Getter
@@ -11,11 +11,11 @@ import lombok.*;
 @EqualsAndHashCode
 public class VeiculoEstacionadoDTO {
 
-    private Long id;
+    private String id;
     private String placa;
     private String modelo;
 
-    public VeiculoEstacionadoDTO(VeiculoEstacionadoEntity veiculoEstacionadoEntity) {
+    public VeiculoEstacionadoDTO(VeiculoEstacionado veiculoEstacionadoEntity) {
         this.id = veiculoEstacionadoEntity.getId();
         this.placa = veiculoEstacionadoEntity.getPlaca();
         this.modelo = veiculoEstacionadoEntity.getModelo();

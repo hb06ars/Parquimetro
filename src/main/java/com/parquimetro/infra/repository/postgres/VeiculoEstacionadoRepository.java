@@ -1,7 +1,7 @@
 package com.parquimetro.infra.repository.postgres;
 
-import com.parquimetro.domain.entity.VeiculoEstacionadoEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface VeiculoEstacionadoRepository extends JpaRepository<VeiculoEstacionadoEntity, Long> {
+public interface VeiculoEstacionadoRepository extends MongoRepository<VeiculoEstacionado, Long> {
 }

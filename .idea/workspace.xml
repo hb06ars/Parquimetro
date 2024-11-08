@@ -5,14 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffe54c36-9eb0-4585-9f73-96121246367d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/variaveis.env" beforeDir="false" afterPath="$PROJECT_DIR$/env/variaveis.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/postgres/VeiculoEstacionadoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/postgres/VeiculoEstacionadoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionadoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionadoEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/postgres/VeiculoEstacionadoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/mongo/VeiculoEstacionadoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/dto/VeiculoEstacionadoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/dto/VeiculoEstacionadoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionadoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/mapper/VeiculoEstacionadoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/mapper/VeiculoEstacionadoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/repository/postgres/VeiculoEstacionadoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/repository/postgres/VeiculoEstacionadoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,7 +61,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/hb06a/OneDrive/Documentos/Github/Parquimetro&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hb06a/OneDrive/Documentos/Github/pdi&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,

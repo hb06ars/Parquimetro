@@ -1,12 +1,12 @@
 package com.parquimetro.infra.mapper;
 
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
-import com.parquimetro.domain.entity.VeiculoEstacionadoEntity;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
 import org.springframework.stereotype.Component;
 
 @Component
 public class VeiculoEstacionadoMapper {
-    public VeiculoEstacionadoDTO toDTO(VeiculoEstacionadoEntity entity) {
+    public VeiculoEstacionadoDTO toDTO(VeiculoEstacionado entity) {
         if (entity == null) {
             return null;
         }
@@ -17,11 +17,11 @@ public class VeiculoEstacionadoMapper {
                 .build();
     }
 
-    public VeiculoEstacionadoEntity toEntity(VeiculoEstacionadoDTO dto) {
+    public VeiculoEstacionado toEntity(VeiculoEstacionadoDTO dto) {
         if (dto == null) {
             return null;
         }
-        return VeiculoEstacionadoEntity.builder()
+        return VeiculoEstacionado.builder()
                 .id(dto.getId())
                 .placa(dto.getPlaca())
                 .modelo(dto.getModelo())

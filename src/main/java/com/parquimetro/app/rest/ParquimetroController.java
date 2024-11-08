@@ -1,8 +1,8 @@
 package com.parquimetro.app.rest;
 
-import com.parquimetro.app.service.postgres.VeiculoEstacionadoService;
+import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
-import com.parquimetro.domain.entity.VeiculoEstacionadoEntity;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,27 +31,27 @@ public class ParquimetroController {
 
     @GetMapping("/{id}")
     public ResponseEntity<VeiculoEstacionadoDTO> findById(@PathVariable Long id) {
-        VeiculoEstacionadoEntity obj = service.findById(id);
+        VeiculoEstacionado obj = service.findById(id);
         return ResponseEntity.ok().body(new VeiculoEstacionadoDTO(obj));
     }
 
     @GetMapping
     public ResponseEntity<List<VeiculoEstacionadoDTO>> findAll() {
-        List<VeiculoEstacionadoEntity> list = service.findAll();
+        List<VeiculoEstacionado> list = service.findAll();
         List<VeiculoEstacionadoDTO> listDTO = list.stream().map(VeiculoEstacionadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 
     @PostMapping
     public ResponseEntity<VeiculoEstacionadoDTO> save(@Valid @RequestBody VeiculoEstacionadoDTO dto) {
-        VeiculoEstacionadoEntity newObj = service.save(new VeiculoEstacionadoEntity(dto));
+        VeiculoEstacionado newObj = service.save(new VeiculoEstacionado(dto));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<VeiculoEstacionadoDTO> update(@PathVariable Long id, @Valid @RequestBody VeiculoEstacionadoDTO dto) {
-        VeiculoEstacionadoEntity newObj = service.update(id, new VeiculoEstacionadoEntity(dto));
+        VeiculoEstacionado newObj = service.update(id, new VeiculoEstacionado(dto));
         return ResponseEntity.ok().body(new VeiculoEstacionadoDTO(newObj));
     }
 

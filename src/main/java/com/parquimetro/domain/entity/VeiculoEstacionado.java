@@ -1,25 +1,27 @@
 package com.parquimetro.domain.entity;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-
-@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "veiculoEstacionado")
-public class VeiculoEstacionadoEntity {
+
+@Document(collection = VeiculoEstacionado.COLLECTION_NAME)
+public class VeiculoEstacionado {
+    public static final String COLLECTION_NAME = "veiculoEstacionado";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Indexed
+    private String id;
     private String placa;
     private String modelo;
 
-    public VeiculoEstacionadoEntity(VeiculoEstacionadoDTO dto) {
+    public VeiculoEstacionado(VeiculoEstacionadoDTO dto) {
         this.id = dto.getId();
         this.placa = dto.getPlaca();
         this.modelo = dto.getModelo();
