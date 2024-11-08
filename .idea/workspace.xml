@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ffe54c36-9eb0-4585-9f73-96121246367d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/postgres/VeiculoEstacionadoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/postgres/VeiculoEstacionadoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionadoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionadoEntity.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2oZsibQVMrWqmpb9w0JCc5pAKjT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Parquimetro.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yaml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parquimetro [clean,compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parquimetro [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parquimetro [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parquimetro [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parquimetro [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hb06a/OneDrive/Documentos/Github/Parquimetro&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hb06a\OneDrive\Documentos\Github\Parquimetro" />
+      <recent name="C:\Users\hb06a\OneDrive\Documentos\Github\Parquimetro\src\main\java\com\parquimetro\domain" />
+      <recent name="C:\Users\hb06a\OneDrive\Documentos\Github\Parquimetro\src\main\java\com\parquimetro\domain\dto" />
+      <recent name="C:\Users\hb06a\OneDrive\Documentos\Github\Parquimetro\src\main\java\com\parquimetro\infra\exception" />
+      <recent name="C:\Users\hb06a\OneDrive\Documentos\Github\Parquimetro\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.parquimetro.domain" />
+      <recent name="com.parquimetro.infrastructure" />
+      <recent name="com.parquimetro.application.rest.v1" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.parquimetro.domain.dto" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Parquimetro">
+    <configuration name="Parquimetro" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.parquimetro.ParquimetroApplication" />
+      <module name="parquimetro" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Parquimetro" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Parquimetro" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="envFilePath" value="" />
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Parquimetro" />
+      <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ffe54c36-9eb0-4585-9f73-96121246367d" name="Changes" comment="" />
+      <created>1731088559810</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731088559810</updated>
+    </task>
+    <servers />
+  </component>
+</project>
