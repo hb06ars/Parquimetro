@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
         ListErrorResponse ListErrorResponse = new ListErrorResponse(
                 List.of(MessageError.builder()
                         .detalhe(e.getMessage())
-                        .erro("Erro ao salvar registro no sistema")
+                        .erro("Erro no sistema")
                         .build()),
                 HttpStatus.INTERNAL_SERVER_ERROR.value()
         );

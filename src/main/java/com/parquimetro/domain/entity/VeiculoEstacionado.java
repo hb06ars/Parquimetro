@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "veiculoEstacionado")
-public class VeiculoEstacionado {
+public class VeiculoEstacionado  implements Serializable {
 
     @Id
     @Indexed
