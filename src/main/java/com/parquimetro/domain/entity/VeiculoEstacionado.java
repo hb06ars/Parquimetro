@@ -10,10 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-@Document(collection = VeiculoEstacionado.COLLECTION_NAME)
+@Document(collection = "veiculoEstacionado")
 public class VeiculoEstacionado {
-    public static final String COLLECTION_NAME = "veiculoEstacionado";
 
     @Id
     @Indexed

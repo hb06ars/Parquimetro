@@ -9,7 +9,7 @@
 # DICAS
 
 ### URI MongoDB: <br>
-    mongodb://parquimetrousr:Parquimetro@2024@localhost:27017
+    mongodb://parquimetrousr:Parquimetro2024@localhost:27017
 
 ### URI Kafka Drop: <br>
     http://localhost:9000/

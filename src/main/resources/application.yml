@@ -2,8 +2,7 @@ server:
   port: ${PORT:8080}
 spring:
   mongodb:
-    uri: ${MONGODB_URI:mongodb://parquimetrousr:Parquimetro%402024@localhost:27017/}
-    database: ${MONGODB_DATABASE:parquimetro}
+    uri: ${MONGODB_URI:mongodb://localhost:27017/registros}
   redis:
     host: ${REDIS_URL:localhost}
     port: 6379
