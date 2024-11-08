@@ -27,12 +27,12 @@ public class VeiculoEstacionadoService {
         return repository.findAll();
     }
 
-    public VeiculoEstacionado findById(Long id) {
+    public VeiculoEstacionado findById(String id) {
         Optional<VeiculoEstacionado> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id));
     }
 
-    public VeiculoEstacionado update(Long id, VeiculoEstacionado veiculoAtualizado) {
+    public VeiculoEstacionado update(String id, VeiculoEstacionado veiculoAtualizado) {
         Optional<VeiculoEstacionado> veiculoExistente = repository.findById(id);
 
         if (veiculoExistente.isPresent()) {
@@ -45,7 +45,7 @@ public class VeiculoEstacionadoService {
         }
     }
 
-    public void delete(Long id) {
+    public void delete(String id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {

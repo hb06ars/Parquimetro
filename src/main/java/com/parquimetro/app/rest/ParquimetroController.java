@@ -30,7 +30,7 @@ public class ParquimetroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VeiculoEstacionadoDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<VeiculoEstacionadoDTO> findById(@PathVariable String id) {
         VeiculoEstacionado obj = service.findById(id);
         return ResponseEntity.ok().body(new VeiculoEstacionadoDTO(obj));
     }
@@ -50,13 +50,13 @@ public class ParquimetroController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<VeiculoEstacionadoDTO> update(@PathVariable Long id, @Valid @RequestBody VeiculoEstacionadoDTO dto) {
+    public ResponseEntity<VeiculoEstacionadoDTO> update(@PathVariable String id, @Valid @RequestBody VeiculoEstacionadoDTO dto) {
         VeiculoEstacionado newObj = service.update(id, new VeiculoEstacionado(dto));
         return ResponseEntity.ok().body(new VeiculoEstacionadoDTO(newObj));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<VeiculoEstacionadoDTO> delete(@PathVariable Long id) {
+    public ResponseEntity<VeiculoEstacionadoDTO> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
