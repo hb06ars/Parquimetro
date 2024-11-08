@@ -13,7 +13,7 @@ public class VeiculoEstacionadoMapper {
         return VeiculoEstacionadoDTO.builder()
                 .id(entity.getId())
                 .placa(entity.getPlaca())
-                .modelo(entity.getModelo())
+                .local(entity.getLocal())
                 .build();
     }
 
@@ -24,7 +24,7 @@ public class VeiculoEstacionadoMapper {
         return VeiculoEstacionado.builder()
                 .id(dto.getId())
                 .placa(dto.getPlaca())
-                .modelo(dto.getModelo())
+                .local(dto.getLocal())
                 .build();
     }
 }

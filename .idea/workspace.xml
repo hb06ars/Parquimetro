@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffe54c36-9eb0-4585-9f73-96121246367d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/mongo/VeiculoEstacionadoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/mongo/VeiculoEstacionadoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/repository/postgres/VeiculoEstacionadoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/repository/postgres/VeiculoEstacionadoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/dto/VeiculoEstacionadoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/dto/VeiculoEstacionadoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/entity/VeiculoEstacionado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/mapper/VeiculoEstacionadoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/mapper/VeiculoEstacionadoMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +42,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Parquimetro.executor": "Debug",
+    "Application.Parquimetro.executor": "Run",
     "Docker.docker-compose.yaml: Compose Deployment.executor": "Run",
     "Maven.parquimetro [clean,compile].executor": "Run",
     "Maven.parquimetro [clean].executor": "Run",

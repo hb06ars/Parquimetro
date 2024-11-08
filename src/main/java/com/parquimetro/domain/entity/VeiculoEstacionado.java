@@ -1,9 +1,13 @@
 package com.parquimetro.domain.entity;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
+import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,12 +21,20 @@ public class VeiculoEstacionado {
     @Indexed
     private String id;
     private String placa;
-    private String modelo;
+    private String local;
+    private LocalDateTime horaEntrada;
+    private LocalDateTime horaSaida;
+    private BigDecimal valor;
+    private StatusPagamentoEnum statusPagamentoEnum;
 
     public VeiculoEstacionado(VeiculoEstacionadoDTO dto) {
         this.id = dto.getId();
         this.placa = dto.getPlaca();
-        this.modelo = dto.getModelo();
+        this.local = dto.getLocal();
+        this.horaEntrada = dto.getHoraEntrada();
+        this.horaSaida = dto.getHoraSaida();
+        this.valor = dto.getValor();
+        this.statusPagamentoEnum = dto.getStatusPagamentoEnum();
     }
 
     @Override
@@ -30,7 +42,7 @@ public class VeiculoEstacionado {
         return "VeiculoEstacionadoEntity{" +
                 "id=" + id +
                 ", placa='" + placa + '\'' +
-                ", modelo='" + modelo + '\'' +
+                ", local='" + local + '\'' +
                 '}';
     }
 }
