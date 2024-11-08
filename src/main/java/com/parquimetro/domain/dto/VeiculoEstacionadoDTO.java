@@ -4,6 +4,7 @@ import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class VeiculoEstacionadoDTO {
+public class VeiculoEstacionadoDTO implements Serializable {
 
     private String id;
     private String placa;
