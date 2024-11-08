@@ -1,14 +1,11 @@
 package com.parquimetro.app.service.mongo;
 
 import com.parquimetro.domain.entity.VeiculoEstacionado;
-import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.postgres.VeiculoEstacionadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
