@@ -60,7 +60,7 @@ public class VeiculoEstacionadoService {
 
     public VeiculoEstacionado findByPlacaPendentePagamento(String placa) {
         return repository.findByPlacaPendentePagamento(placa).orElseThrow( () ->
-            new ObjectNotFoundException("Veículo com Número de Placa " + placa + " não encontrado.")
+            new ObjectNotFoundException("Veículo com Número de Placa " + placa + " pendente não encontrado.")
         );
     }
 }
