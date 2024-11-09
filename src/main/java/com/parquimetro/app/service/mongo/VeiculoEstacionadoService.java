@@ -1,6 +1,7 @@
 package com.parquimetro.app.service.mongo;
 
 import com.parquimetro.domain.entity.VeiculoEstacionado;
+import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.postgres.VeiculoEstacionadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,11 @@ public class VeiculoEstacionadoService {
         } else {
             throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
         }
+    }
+
+    public VeiculoEstacionado findByPlacaPendentePagamento(String placa) {
+        return repository.findByPlacaPendentePagamento(placa).orElseThrow( () ->
+            new ObjectNotFoundException("Veículo com Número de Placa " + placa + " não encontrado.")
+        );
     }
 }

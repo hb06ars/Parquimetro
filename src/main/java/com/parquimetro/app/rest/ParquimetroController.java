@@ -6,13 +6,13 @@ import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
 import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
+import com.parquimetro.domain.useCase.DevolverVeiculoUseCase;
 import com.parquimetro.domain.useCase.PreencherDadosUseCase;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +33,9 @@ public class ParquimetroController {
 
     @Autowired
     private PreencherDadosUseCase preencherDadosUseCase;
+
+    @Autowired
+    private DevolverVeiculoUseCase devolverVeiculoUseCase;
 
     @Autowired
     private VeiculoEstacionadoRedisService redisService;
@@ -86,6 +89,6 @@ public class ParquimetroController {
     @PostMapping("/devolver")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> devolver(@RequestParam(required = true) String placa) throws IOException {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(devolverVeiculoUseCase.execute(placa));
     }
 }
