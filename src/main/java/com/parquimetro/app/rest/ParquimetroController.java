@@ -7,6 +7,7 @@ import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.useCase.PreencherDadosUseCase;
+import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -59,8 +61,11 @@ public class ParquimetroController {
         VeiculoEstacionadoRedis cachedItem = redisService.findById(numeroProcesso);
         if (cachedItem == null) {
             VeiculoEstacionado obj = service.findByNumeroProcesso(numeroProcesso);
-            cachedItem = new VeiculoEstacionadoRedis(new VeiculoEstacionadoDTO(obj));
-            redisService.save(new VeiculoEstacionadoDTO(cachedItem));
+            if(Objects.nonNull(obj)){
+                cachedItem = new VeiculoEstacionadoRedis(new VeiculoEstacionadoDTO(obj));
+                redisService.save(new VeiculoEstacionadoDTO(cachedItem));
+            }
+            throw new ObjectNotFoundException("Objeto não encontrado! Número de processo: " + numeroProcesso);
         }
         return ResponseEntity.ok().body(cachedItem);
     }
