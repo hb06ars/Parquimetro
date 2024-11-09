@@ -5,6 +5,7 @@
 - O Kafka Drop utilizamos para visualizar os tópicos pelo navegador. (http://localhost:9000/)
 - URL para utilizar no postman e startar a aplicação (POST e o BODY): http://localhost:8080/
 - As variáveis de ambiente estão na pasta env.
+- As Collections de todas as requisições estão na pasta collections.
 
 # DICAS
 
