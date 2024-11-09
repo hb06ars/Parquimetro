@@ -56,7 +56,6 @@ public class ParquimetroController {
     }
 
     @GetMapping("/{numeroProcesso}")
-    @Cacheable(value = "VEICULO_ESTACIONADO", key = "#numeroProcesso")
     public ResponseEntity<VeiculoEstacionadoRedis> findByNumeroProcesso(@PathVariable String numeroProcesso) {
         VeiculoEstacionadoRedis cachedItem = redisService.findById(numeroProcesso);
         if (cachedItem == null) {
@@ -71,7 +70,6 @@ public class ParquimetroController {
     }
 
     @GetMapping
-    @Cacheable(value = "LISTA", key = "#id")
     public ResponseEntity<Iterable<VeiculoEstacionadoRedis>> findAll() {
         Iterable<VeiculoEstacionadoRedis> cachedItem = redisService.findAll();
         long size = StreamSupport.stream(cachedItem.spliterator(), false).count();
@@ -82,5 +80,12 @@ public class ParquimetroController {
             redisService.saveAll(cachedItem);
         }
         return ResponseEntity.ok().body(cachedItem);
+    }
+
+
+    @PostMapping("/devolver")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<VeiculoEstacionadoDTO> devolver(@RequestParam(required = true) String placa) throws IOException {
+        return ResponseEntity.ok(null);
     }
 }
