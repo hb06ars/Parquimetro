@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"numeroProcesso\": \"20241109110546DESW1234\",\r\n    \"placa\": \"AAA4444\",\r\n    \"local\": \"A208\",\r\n    \"horaEntrada\": \"2024-10-14T15:30:00\",\r\n    \"horaSaida\": \"2024-10-14T17:30:00\",\r\n    \"valor\": 10.96,\r\n    \"statusPagamentoEnum\": \"PAGO\"\r\n}",
+					"raw": "{\r\n    \"numeroProcesso\": \"20241109115025RREW123\",\r\n    \"placa\": \"RREW123\",\r\n    \"local\": \"A2108\",\r\n    \"horaEntrada\": \"2024-11-09T12:10:00\",\r\n    \"horaSaida\": null,\r\n    \"valor\": 0,\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -36,12 +36,21 @@
 			"response": []
 		},
 		{
-			"name": "Buscar",
+			"name": "Criar Tarifa",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/parquimetro/20241109110546DESW1234",
+					"raw": "http://localhost:8080/parquimetro/tarifa?valorTarifa=20",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -49,7 +58,135 @@
 					"port": "8080",
 					"path": [
 						"parquimetro",
-						"20241109110546DESW1234"
+						"tarifa"
+					],
+					"query": [
+						{
+							"key": "valorTarifa",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tarifa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/tarifa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"tarifa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devolver",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/devolver?placa=RREW123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"devolver"
+					],
+					"query": [
+						{
+							"key": "placa",
+							"value": "RREW123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/pagar?placa=RREW123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"pagar"
+					],
+					"query": [
+						{
+							"key": "placa",
+							"value": "RREW123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/20241109173710RREW123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"20241109173710RREW123"
 					]
 				}
 			},
@@ -102,7 +239,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"placa\": \"DESW1234\",\r\n    \"local\": \"A11\",\r\n    \"horaEntrada\": \"2024-11-11T15:30:00\",\r\n    \"horaSaida\": \"2024-11-11T17:30:00\",\r\n    \"valor\": 10.95,\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
+					"raw": "{\r\n    \"placa\": \"RREW123\",\r\n    \"local\": \"A33\",\r\n    \"horaEntrada\": \"2024-11-09T19:00:00.00\",\r\n    \"horaSaida\": null,\r\n    \"valor\": 0.00,\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
