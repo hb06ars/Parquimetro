@@ -27,7 +27,7 @@ public class VeiculoEstacionado  implements Serializable {
     private String local;
     private LocalDateTime horaEntrada = LocalDateTime.now();
     private LocalDateTime horaSaida;
-    private BigDecimal valor = BigDecimal.ZERO;;
+    private BigDecimal valor = BigDecimal.ZERO;
     private StatusPagamentoEnum statusPagamentoEnum = StatusPagamentoEnum.PENDENTE_PAGAMENTO;
 
     public VeiculoEstacionado(VeiculoEstacionadoDTO dto) {
