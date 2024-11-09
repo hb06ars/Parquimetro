@@ -3,6 +3,7 @@ package com.parquimetro.app.service.redis;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.infra.repository.redis.VeiculoEstacionadoRedisRepository;
+import com.parquimetro.infra.repository.redis.VeiculoEstacionadoRedisRepositoryCustom;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class VeiculoEstacionadoRedisService {
 
     private final VeiculoEstacionadoRedisRepository repository;
+    private final VeiculoEstacionadoRedisRepositoryCustom repositoryCustom;
 
     @Autowired
-    public VeiculoEstacionadoRedisService(VeiculoEstacionadoRedisRepository veiculoEstacionadoRedisRepository) {
+    public VeiculoEstacionadoRedisService(VeiculoEstacionadoRedisRepository veiculoEstacionadoRedisRepository, VeiculoEstacionadoRedisRepositoryCustom repositoryCustom) {
         this.repository = veiculoEstacionadoRedisRepository;
+        this.repositoryCustom = repositoryCustom;
     }
 
     public VeiculoEstacionadoRedis save(VeiculoEstacionadoDTO veiculo) {
@@ -33,6 +36,10 @@ public class VeiculoEstacionadoRedisService {
 
     public VeiculoEstacionadoRedis findById(String numeroProcesso) {
         return repository.findById(numeroProcesso).orElse(null);
+    }
+
+    public boolean encontrarPlacaNaoPaga(String placa) {
+        return repositoryCustom.encontrarPlacaNaoPaga(placa);
     }
 
     public VeiculoEstacionadoRedis update(String numeroProcesso, VeiculoEstacionado veiculoAtualizado) {

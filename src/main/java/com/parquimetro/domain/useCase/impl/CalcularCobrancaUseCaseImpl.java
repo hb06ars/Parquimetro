@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -20,13 +21,23 @@ public class CalcularCobrancaUseCaseImpl implements CalcularCobrancaUseCase {
     @Override
     public VeiculoEstacionado execute(VeiculoEstacionado veiculoEstacionado) {
         veiculoEstacionado.setHoraSaida(LocalDateTime.now());
+        BigDecimal valorTarifa = buscarValorTarifa();
+        BigDecimal valorPagar;
 
         BigDecimal diferencaMinutos = BigDecimal.valueOf(Duration
                 .between(veiculoEstacionado.getHoraEntrada(), veiculoEstacionado.getHoraSaida())
                 .toMinutes());
 
-        veiculoEstacionado.setValor(diferencaMinutos.multiply(buscarValorTarifa()));
+        // Cálculo baseado em HORAS. Caso seja menor que 30min cobrará apenas a metade da tarifa.
+        if (diferencaMinutos.compareTo(new BigDecimal("30")) <= 0){
+            valorPagar = valorTarifa.divide(new BigDecimal("2"), RoundingMode.HALF_UP);
+        }
+        else{
+            BigDecimal diferencaHoras = diferencaMinutos.divide(BigDecimal.valueOf(60), 0, RoundingMode.UP);
+            valorPagar = diferencaHoras.multiply(valorTarifa);
+        }
 
+        veiculoEstacionado.setValor(valorPagar);
         return veiculoEstacionado;
     }
 
