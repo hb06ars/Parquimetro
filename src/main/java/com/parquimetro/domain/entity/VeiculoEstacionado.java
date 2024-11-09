@@ -19,9 +19,8 @@ import java.time.LocalDateTime;
 public class VeiculoEstacionado  implements Serializable {
 
     @Id
-    @Indexed
     private String id;
-    @Indexed
+    @Indexed(unique = true)
     private String numeroProcesso;
 
     private String placa;

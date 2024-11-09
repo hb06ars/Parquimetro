@@ -3,12 +3,15 @@ package com.parquimetro.app.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parquimetro.app.service.kafka.producer.KafkaProducer;
 import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
+import com.parquimetro.app.service.redis.TarifaRedisService;
 import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
+import com.parquimetro.domain.dto.TarifaDTO;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.useCase.DevolverVeiculoUseCase;
 import com.parquimetro.domain.useCase.PreencherDadosUseCase;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
+import com.parquimetro.infra.repository.redis.model.TarifaRedis;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,7 +42,9 @@ public class ParquimetroController {
     private DevolverVeiculoUseCase devolverVeiculoUseCase;
 
     @Autowired
-    private VeiculoEstacionadoRedisService redisService;
+    private VeiculoEstacionadoRedisService veiculoRedisService;
+    @Autowired
+    private TarifaRedisService tarifaRedisService;
 
     @Autowired
     private KafkaProducer producer;
@@ -60,12 +66,12 @@ public class ParquimetroController {
 
     @GetMapping("/{numeroProcesso}")
     public ResponseEntity<VeiculoEstacionadoRedis> findByNumeroProcesso(@PathVariable String numeroProcesso) {
-        VeiculoEstacionadoRedis cachedItem = redisService.findById(numeroProcesso);
+        VeiculoEstacionadoRedis cachedItem = veiculoRedisService.findById(numeroProcesso);
         if (cachedItem == null) {
             VeiculoEstacionado obj = service.findByNumeroProcesso(numeroProcesso);
-            if(Objects.nonNull(obj)){
+            if (Objects.nonNull(obj)) {
                 cachedItem = new VeiculoEstacionadoRedis(new VeiculoEstacionadoDTO(obj));
-                redisService.save(new VeiculoEstacionadoDTO(cachedItem));
+                veiculoRedisService.save(new VeiculoEstacionadoDTO(cachedItem));
             }
             throw new ObjectNotFoundException("Objeto não encontrado! Número de processo: " + numeroProcesso);
         }
@@ -74,15 +80,32 @@ public class ParquimetroController {
 
     @GetMapping
     public ResponseEntity<Iterable<VeiculoEstacionadoRedis>> findAll() {
-        Iterable<VeiculoEstacionadoRedis> cachedItem = redisService.findAll();
+        Iterable<VeiculoEstacionadoRedis> cachedItem = veiculoRedisService.findAll();
         long size = StreamSupport.stream(cachedItem.spliterator(), false).count();
         if (size == 0) {
             List<VeiculoEstacionado> lista = service.findAll();
             cachedItem = lista.stream().map(VeiculoEstacionadoRedis::new)
                     .collect(Collectors.toList());
-            redisService.saveAll(cachedItem);
+            veiculoRedisService.saveAll(cachedItem);
         }
         return ResponseEntity.ok().body(cachedItem);
+    }
+
+    @PostMapping("/tarifa")
+    public ResponseEntity<TarifaDTO> tarifa(@RequestParam(required = true) BigDecimal valorTarifa) {
+        return ResponseEntity.ok(new TarifaDTO(tarifaRedisService
+                .save(TarifaDTO.builder()
+                        .id(1L)
+                        .valorTarifa(valorTarifa)
+                        .build())));
+    }
+
+    @GetMapping("/tarifa")
+    public ResponseEntity<TarifaDTO> buscarTarifa() {
+        TarifaRedis cachedItem = tarifaRedisService.findFirstTarifa();
+        if (cachedItem != null)
+            return ResponseEntity.ok(new TarifaDTO(cachedItem));
+        throw new ObjectNotFoundException("Nenhuma tarifa encontrada no sistema.");
     }
 
 

@@ -1,7 +1,6 @@
 package com.parquimetro.app.service.redis;
 
 import com.parquimetro.domain.dto.TarifaDTO;
-import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.redis.TarifaRedisRepository;
 import com.parquimetro.infra.repository.redis.model.TarifaRedis;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class TarifaRedisService {
         if (itens.hasNext()) {
             return itens.next();
         }
-        throw new ObjectNotFoundException("Nenhuma tarifa cadastrada no sistema.");
+        return null;
     }
 
     public TarifaRedis update(Long id, TarifaDTO dto) {
