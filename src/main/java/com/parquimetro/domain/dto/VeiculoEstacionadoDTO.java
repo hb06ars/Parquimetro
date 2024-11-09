@@ -1,7 +1,9 @@
 package com.parquimetro.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.enums.StatusPagamentoEnum;
+import com.parquimetro.domain.util.GerarNumeroProcesso;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.*;
 
@@ -15,9 +17,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class VeiculoEstacionadoDTO implements Serializable {
 
     private String id;
+    private String numeroProcesso;
     private String placa;
     private String local;
     private LocalDateTime horaEntrada = LocalDateTime.now();
@@ -28,6 +32,7 @@ public class VeiculoEstacionadoDTO implements Serializable {
 
     public VeiculoEstacionadoDTO(VeiculoEstacionado veiculoEstacionadoEntity) {
         this.id = veiculoEstacionadoEntity.getId();
+        this.numeroProcesso = veiculoEstacionadoEntity.getNumeroProcesso();
         this.placa = veiculoEstacionadoEntity.getPlaca();
         this.local = veiculoEstacionadoEntity.getLocal();
         this.horaEntrada = veiculoEstacionadoEntity.getHoraEntrada();
@@ -37,7 +42,7 @@ public class VeiculoEstacionadoDTO implements Serializable {
     }
 
     public VeiculoEstacionadoDTO(VeiculoEstacionadoRedis veiculoEstacionadoRedis) {
-        this.id = veiculoEstacionadoRedis.getId();
+        this.numeroProcesso = veiculoEstacionadoRedis.getNumeroProcesso();
         this.placa = veiculoEstacionadoRedis.getPlaca();
         this.local = veiculoEstacionadoRedis.getLocal();
         this.horaEntrada = veiculoEstacionadoRedis.getHoraEntrada();
@@ -51,6 +56,7 @@ public class VeiculoEstacionadoDTO implements Serializable {
     public String toString() {
         return "VeiculoEstacionadoDTO{" +
                 "id=" + id +
+                ", numeroProcesso='" + numeroProcesso + '\'' +
                 ", placa='" + placa + '\'' +
                 ", local='" + placa + '\'' +
                 ", horaEntrada=" + horaEntrada +

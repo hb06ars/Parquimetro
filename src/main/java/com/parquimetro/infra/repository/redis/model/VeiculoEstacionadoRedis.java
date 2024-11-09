@@ -6,6 +6,7 @@ import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 public class VeiculoEstacionadoRedis {
 
     @Id
-    private String id;
+    private String numeroProcesso;
     private String placa;
     private String local;
     private LocalDateTime horaEntrada = LocalDateTime.now();
@@ -28,7 +29,7 @@ public class VeiculoEstacionadoRedis {
     private StatusPagamentoEnum statusPagamentoEnum = StatusPagamentoEnum.PENDENTE_PAGAMENTO;
 
     public VeiculoEstacionadoRedis(VeiculoEstacionadoDTO dto) {
-        this.id = dto.getId();
+        this.numeroProcesso = dto.getNumeroProcesso();
         this.placa = dto.getPlaca();
         this.local = dto.getLocal();
         this.horaEntrada = dto.getHoraEntrada();
@@ -38,7 +39,7 @@ public class VeiculoEstacionadoRedis {
     }
 
     public VeiculoEstacionadoRedis(VeiculoEstacionado entity) {
-        this.id = entity.getId();
+        this.numeroProcesso = entity.getNumeroProcesso();
         this.placa = entity.getPlaca();
         this.local = entity.getLocal();
         this.horaEntrada = entity.getHoraEntrada();

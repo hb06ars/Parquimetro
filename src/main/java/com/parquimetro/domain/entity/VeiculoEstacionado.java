@@ -21,15 +21,19 @@ public class VeiculoEstacionado  implements Serializable {
     @Id
     @Indexed
     private String id;
+    @Indexed
+    private String numeroProcesso;
+
     private String placa;
     private String local;
-    private LocalDateTime horaEntrada;
+    private LocalDateTime horaEntrada = LocalDateTime.now();
     private LocalDateTime horaSaida;
-    private BigDecimal valor;
-    private StatusPagamentoEnum statusPagamentoEnum;
+    private BigDecimal valor = BigDecimal.ZERO;;
+    private StatusPagamentoEnum statusPagamentoEnum = StatusPagamentoEnum.PENDENTE_PAGAMENTO;
 
     public VeiculoEstacionado(VeiculoEstacionadoDTO dto) {
         this.id = dto.getId();
+        this.numeroProcesso = dto.getNumeroProcesso();
         this.placa = dto.getPlaca();
         this.local = dto.getLocal();
         this.horaEntrada = dto.getHoraEntrada();
@@ -42,6 +46,7 @@ public class VeiculoEstacionado  implements Serializable {
     public String toString() {
         return "VeiculoEstacionadoEntity{" +
                 "id=" + id +
+                ", numeroProcesso='" + numeroProcesso + '\'' +
                 ", placa='" + placa + '\'' +
                 ", local='" + local + '\'' +
                 '}';

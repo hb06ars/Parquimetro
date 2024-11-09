@@ -27,13 +27,13 @@ public class VeiculoEstacionadoService {
         return repository.findAll();
     }
 
-    public VeiculoEstacionado findById(String id) {
-        Optional<VeiculoEstacionado> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id));
+    public VeiculoEstacionado findByNumeroProcesso(String numeroProcesso) {
+        Optional<VeiculoEstacionado> obj = repository.findByNumeroProcesso(numeroProcesso);
+        return obj.orElse(null);
     }
 
-    public VeiculoEstacionado update(String id, VeiculoEstacionado veiculoAtualizado) {
-        Optional<VeiculoEstacionado> veiculoExistente = repository.findById(id);
+    public VeiculoEstacionado update(String numeroProcesso, VeiculoEstacionado veiculoAtualizado) {
+        Optional<VeiculoEstacionado> veiculoExistente = repository.findByNumeroProcesso(numeroProcesso);
 
         if (veiculoExistente.isPresent()) {
             VeiculoEstacionado veiculo = veiculoExistente.get();
@@ -46,15 +46,15 @@ public class VeiculoEstacionadoService {
 
             return repository.save(veiculo);
         } else {
-            throw new RuntimeException("Veículo com ID " + id + " não encontrado.");
+            throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
         }
     }
 
-    public void delete(String id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
+    public void delete(String numeroProcesso) {
+        if (repository.existsByNumeroProcesso(numeroProcesso)) {
+            repository.deleteByNumeroProcesso(numeroProcesso);
         } else {
-            throw new RuntimeException("Veículo com ID " + id + " não encontrado.");
+            throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
         }
     }
 }

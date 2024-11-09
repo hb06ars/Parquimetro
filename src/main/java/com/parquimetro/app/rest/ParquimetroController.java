@@ -6,6 +6,7 @@ import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
 import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
+import com.parquimetro.domain.useCase.PreencherDadosUseCase;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +28,9 @@ public class ParquimetroController {
 
     @Autowired
     private VeiculoEstacionadoService service;
+
+    @Autowired
+    private PreencherDadosUseCase preencherDadosUseCase;
 
     @Autowired
     private VeiculoEstacionadoRedisService redisService;
@@ -41,18 +46,19 @@ public class ParquimetroController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> saveorupdate(@RequestBody VeiculoEstacionadoDTO veiculoEstacionadoDTO) throws IOException {
+    public ResponseEntity<VeiculoEstacionadoDTO> saveorupdate(@RequestBody VeiculoEstacionadoDTO veiculoEstacionadoDTO) throws IOException {
+        preencherDadosUseCase.execute(veiculoEstacionadoDTO);
         String payload = objectMapper.writeValueAsString(veiculoEstacionadoDTO);
         producer.sendMessage(topico, payload);
-        return ResponseEntity.ok("Tópico enviado.");
+        return ResponseEntity.ok(veiculoEstacionadoDTO);
     }
 
-    @GetMapping("/{id}")
-    @Cacheable(value = "VEICULO_ESTACIONADO", key = "#id")
-    public ResponseEntity<VeiculoEstacionadoRedis> findById(@PathVariable String id) {
-        VeiculoEstacionadoRedis cachedItem = redisService.findById(id);
+    @GetMapping("/{numeroProcesso}")
+    @Cacheable(value = "VEICULO_ESTACIONADO", key = "#numeroProcesso")
+    public ResponseEntity<VeiculoEstacionadoRedis> findByNumeroProcesso(@PathVariable String numeroProcesso) {
+        VeiculoEstacionadoRedis cachedItem = redisService.findById(numeroProcesso);
         if (cachedItem == null) {
-            VeiculoEstacionado obj = service.findById(id);
+            VeiculoEstacionado obj = service.findByNumeroProcesso(numeroProcesso);
             cachedItem = new VeiculoEstacionadoRedis(new VeiculoEstacionadoDTO(obj));
             redisService.save(new VeiculoEstacionadoDTO(cachedItem));
         }

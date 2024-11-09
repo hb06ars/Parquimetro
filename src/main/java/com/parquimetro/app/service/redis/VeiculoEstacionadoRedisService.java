@@ -31,12 +31,12 @@ public class VeiculoEstacionadoRedisService {
         return repository.findAll();
     }
 
-    public VeiculoEstacionadoRedis findById(String id) {
-        return repository.findById(id).orElse(null);
+    public VeiculoEstacionadoRedis findById(String numeroProcesso) {
+        return repository.findById(numeroProcesso).orElse(null);
     }
 
-    public VeiculoEstacionadoRedis update(String id, VeiculoEstacionado veiculoAtualizado) {
-        Optional<VeiculoEstacionadoRedis> veiculoExistente = repository.findById(id);
+    public VeiculoEstacionadoRedis update(String numeroProcesso, VeiculoEstacionado veiculoAtualizado) {
+        Optional<VeiculoEstacionadoRedis> veiculoExistente = repository.findById(numeroProcesso);
 
         if (veiculoExistente.isPresent()) {
             VeiculoEstacionadoRedis veiculo = veiculoExistente.get();
