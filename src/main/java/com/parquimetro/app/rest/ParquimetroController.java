@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/parquimetro")
@@ -59,9 +60,16 @@ public class ParquimetroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VeiculoEstacionadoDTO>> findAll() {
-        List<VeiculoEstacionado> list = service.findAll();
-        List<VeiculoEstacionadoDTO> listDTO = list.stream().map(VeiculoEstacionadoDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDTO);
+    @Cacheable(value = "LISTA", key = "#id")
+    public ResponseEntity<Iterable<VeiculoEstacionadoRedis>> findAll() {
+        Iterable<VeiculoEstacionadoRedis> cachedItem = redisService.findAll();
+        long size = StreamSupport.stream(cachedItem.spliterator(), false).count();
+        if (size == 0) {
+            List<VeiculoEstacionado> lista = service.findAll();
+            cachedItem = lista.stream().map(VeiculoEstacionadoRedis::new)
+                    .collect(Collectors.toList());
+            redisService.saveAll(cachedItem);
+        }
+        return ResponseEntity.ok().body(cachedItem);
     }
 }

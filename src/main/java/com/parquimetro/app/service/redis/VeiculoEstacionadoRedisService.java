@@ -23,6 +23,14 @@ public class VeiculoEstacionadoRedisService {
         return repository.save(new VeiculoEstacionadoRedis(veiculo));
     }
 
+    public Iterable<VeiculoEstacionadoRedis> saveAll(Iterable<VeiculoEstacionadoRedis> veiculos) {
+        return repository.saveAll(veiculos);
+    }
+
+    public Iterable<VeiculoEstacionadoRedis> findAll() {
+        return repository.findAll();
+    }
+
     public VeiculoEstacionadoRedis findById(String id) {
         return repository.findById(id).orElse(null);
     }

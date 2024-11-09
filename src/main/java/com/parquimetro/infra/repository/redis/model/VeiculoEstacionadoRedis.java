@@ -1,6 +1,7 @@
 package com.parquimetro.infra.repository.redis.model;
 
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -34,5 +35,15 @@ public class VeiculoEstacionadoRedis {
         this.horaSaida = dto.getHoraSaida();
         this.valor = dto.getValor();
         this.statusPagamentoEnum = dto.getStatusPagamentoEnum();
+    }
+
+    public VeiculoEstacionadoRedis(VeiculoEstacionado entity) {
+        this.id = entity.getId();
+        this.placa = entity.getPlaca();
+        this.local = entity.getLocal();
+        this.horaEntrada = entity.getHoraEntrada();
+        this.horaSaida = entity.getHoraSaida();
+        this.valor = entity.getValor();
+        this.statusPagamentoEnum = entity.getStatusPagamentoEnum();
     }
 }
