@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class VeiculoEstacionadoMapper {
     public VeiculoEstacionadoDTO toDTO(VeiculoEstacionado entity) {
-        if (entity == null) {
+        if (entity == null)
             return null;
-        }
+
         return VeiculoEstacionadoDTO.builder()
                 .id(entity.getId())
                 .placa(entity.getPlaca())

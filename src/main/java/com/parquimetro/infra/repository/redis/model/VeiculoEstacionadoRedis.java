@@ -6,7 +6,6 @@ import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

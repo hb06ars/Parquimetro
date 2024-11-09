@@ -3,7 +3,6 @@ package com.parquimetro.domain.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.enums.StatusPagamentoEnum;
-import com.parquimetro.domain.util.GerarNumeroProcesso;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.*;
 

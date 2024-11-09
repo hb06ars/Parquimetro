@@ -1,9 +1,9 @@
 package com.parquimetro.infra.exceptions;
 
+import com.parquimetro.domain.dto.MessageError;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import com.parquimetro.domain.dto.MessageError;
 
 import java.util.List;
 

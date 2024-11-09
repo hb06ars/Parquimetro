@@ -1,7 +1,6 @@
 package com.parquimetro.app.service.mongo;
 
 import com.parquimetro.domain.entity.VeiculoEstacionado;
-import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.postgres.VeiculoEstacionadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
