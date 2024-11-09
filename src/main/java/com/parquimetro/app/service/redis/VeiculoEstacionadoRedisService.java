@@ -59,4 +59,9 @@ public class VeiculoEstacionadoRedisService {
             return null;
         }
     }
+
+    public void excluir(String placa) {
+        String id = repositoryCustom.buscarIdPelaPlaca(placa);
+        repository.deleteById(id);
+    }
 }

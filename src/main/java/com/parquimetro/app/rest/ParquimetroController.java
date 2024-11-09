@@ -9,6 +9,7 @@ import com.parquimetro.domain.dto.TarifaDTO;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.useCase.DevolverVeiculoUseCase;
+import com.parquimetro.domain.useCase.PagarVeiculoUseCase;
 import com.parquimetro.domain.useCase.PreencherDadosUseCase;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.redis.model.TarifaRedis;
@@ -40,6 +41,9 @@ public class ParquimetroController {
 
     @Autowired
     private DevolverVeiculoUseCase devolverVeiculoUseCase;
+
+    @Autowired
+    private PagarVeiculoUseCase pagarVeiculoUseCase;
 
     @Autowired
     private VeiculoEstacionadoRedisService veiculoRedisService;
@@ -113,5 +117,11 @@ public class ParquimetroController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> devolver(@RequestParam(required = true) String placa) throws IOException {
         return ResponseEntity.ok(devolverVeiculoUseCase.execute(placa));
+    }
+
+    @PostMapping("/pagar")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<VeiculoEstacionadoDTO> pagar(@RequestParam(required = true) String placa) throws IOException {
+        return ResponseEntity.ok(pagarVeiculoUseCase.execute(placa));
     }
 }

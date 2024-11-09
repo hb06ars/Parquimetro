@@ -13,10 +13,22 @@ public class VeiculoEstacionadoRedisRepositoryImpl implements VeiculoEstacionado
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+
     @Override
     public boolean encontrarPlacaNaoPaga(String placa) {
         Set<String> keys = redisTemplate.keys("VEICULO_ESTACIONADO:*");
         return keys != null && !keys.isEmpty();
+    }
+
+    @Override
+    public String buscarIdPelaPlaca(String placa) {
+        Set<String> chaves = redisTemplate.keys("VEICULO_ESTACIONADO:*");
+
+        assert chaves != null;
+        for (String chave : chaves) {
+            return chave.split(":")[1];
+        }
+        return null;
     }
 }
 
