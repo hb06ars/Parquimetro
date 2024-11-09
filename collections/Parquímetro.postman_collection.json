@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "9bf0657d-4f1c-4e94-9d3e-ad918e4f8b61",
+		"name": "Parquímetro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7970060"
+	},
+	"item": [
+		{
+			"name": "Atualizando",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroProcesso\": \"20241109110546DESW1234\",\r\n    \"placa\": \"AAA4444\",\r\n    \"local\": \"A208\",\r\n    \"horaEntrada\": \"2024-10-14T15:30:00\",\r\n    \"horaSaida\": \"2024-10-14T17:30:00\",\r\n    \"valor\": 10.96,\r\n    \"statusPagamentoEnum\": \"PAGO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/20241109110546DESW1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"20241109110546DESW1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/672e84323ce3912cc49599b3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"672e84323ce3912cc49599b3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"placa\": \"DESW1234\",\r\n    \"local\": \"A11\",\r\n    \"horaEntrada\": \"2024-11-11T15:30:00\",\r\n    \"horaSaida\": \"2024-11-11T17:30:00\",\r\n    \"valor\": 10.95,\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
