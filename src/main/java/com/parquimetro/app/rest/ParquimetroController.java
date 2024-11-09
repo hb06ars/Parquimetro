@@ -3,8 +3,10 @@ package com.parquimetro.app.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parquimetro.app.service.kafka.producer.KafkaProducer;
 import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
+import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
+import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,9 @@ public class ParquimetroController {
     private VeiculoEstacionadoService service;
 
     @Autowired
+    private VeiculoEstacionadoRedisService redisService;
+
+    @Autowired
     private KafkaProducer producer;
 
     @Autowired
@@ -42,10 +47,15 @@ public class ParquimetroController {
     }
 
     @GetMapping("/{id}")
-    @Cacheable(value = "veiculoEstacionado", key = "#id")
-    public ResponseEntity<VeiculoEstacionadoDTO> findById(@PathVariable String id) {
-        VeiculoEstacionado obj = service.findById(id);
-        return ResponseEntity.ok().body(new VeiculoEstacionadoDTO(obj));
+    @Cacheable(value = "VEICULO_ESTACIONADO", key = "#id")
+    public ResponseEntity<VeiculoEstacionadoRedis> findById(@PathVariable String id) {
+        VeiculoEstacionadoRedis cachedItem = redisService.findById(id);
+        if (cachedItem == null) {
+            VeiculoEstacionado obj = service.findById(id);
+            cachedItem = new VeiculoEstacionadoRedis(new VeiculoEstacionadoDTO(obj));
+            redisService.save(new VeiculoEstacionadoDTO(cachedItem));
+        }
+        return ResponseEntity.ok().body(cachedItem);
     }
 
     @GetMapping
@@ -54,11 +64,4 @@ public class ParquimetroController {
         List<VeiculoEstacionadoDTO> listDTO = list.stream().map(VeiculoEstacionadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
-
-    /*
-    @Cacheable(value = "veiculos", key = "#veiculoId")
-        public Veiculo findVeiculoById(String veiculoId) {
-            return veiculoRepository.findById(veiculoId).orElse(null);
-        }
-    */
 }

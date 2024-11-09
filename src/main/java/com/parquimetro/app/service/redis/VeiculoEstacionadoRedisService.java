@@ -1,0 +1,47 @@
+package com.parquimetro.app.service.redis;
+
+import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
+import com.parquimetro.domain.entity.VeiculoEstacionado;
+import com.parquimetro.infra.repository.redis.VeiculoEstacionadoRedisRepository;
+import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class VeiculoEstacionadoRedisService {
+
+    private final VeiculoEstacionadoRedisRepository repository;
+
+    @Autowired
+    public VeiculoEstacionadoRedisService(VeiculoEstacionadoRedisRepository veiculoEstacionadoRedisRepository) {
+        this.repository = veiculoEstacionadoRedisRepository;
+    }
+
+    public VeiculoEstacionadoRedis save(VeiculoEstacionadoDTO veiculo) {
+        return repository.save(new VeiculoEstacionadoRedis(veiculo));
+    }
+
+    public VeiculoEstacionadoRedis findById(String id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public VeiculoEstacionadoRedis update(String id, VeiculoEstacionado veiculoAtualizado) {
+        Optional<VeiculoEstacionadoRedis> veiculoExistente = repository.findById(id);
+
+        if (veiculoExistente.isPresent()) {
+            VeiculoEstacionadoRedis veiculo = veiculoExistente.get();
+            veiculo.setPlaca(veiculoAtualizado.getPlaca());
+            veiculo.setLocal(veiculoAtualizado.getLocal());
+            veiculo.setHoraEntrada(veiculoAtualizado.getHoraEntrada());
+            veiculo.setHoraSaida(veiculoAtualizado.getHoraSaida());
+            veiculo.setValor(veiculoAtualizado.getValor());
+            veiculo.setStatusPagamentoEnum(veiculoAtualizado.getStatusPagamentoEnum());
+
+            return repository.save(veiculo);
+        } else {
+            return null;
+        }
+    }
+}

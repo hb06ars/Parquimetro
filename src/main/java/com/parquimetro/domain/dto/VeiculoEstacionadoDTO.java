@@ -2,6 +2,7 @@ package com.parquimetro.domain.dto;
 
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.enums.StatusPagamentoEnum;
+import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.*;
 
 import java.io.Serializable;
@@ -33,6 +34,16 @@ public class VeiculoEstacionadoDTO implements Serializable {
         this.horaSaida = veiculoEstacionadoEntity.getHoraSaida();
         this.valor = veiculoEstacionadoEntity.getValor();
         this.statusPagamentoEnum = veiculoEstacionadoEntity.getStatusPagamentoEnum();
+    }
+
+    public VeiculoEstacionadoDTO(VeiculoEstacionadoRedis veiculoEstacionadoRedis) {
+        this.id = veiculoEstacionadoRedis.getId();
+        this.placa = veiculoEstacionadoRedis.getPlaca();
+        this.local = veiculoEstacionadoRedis.getLocal();
+        this.horaEntrada = veiculoEstacionadoRedis.getHoraEntrada();
+        this.horaSaida = veiculoEstacionadoRedis.getHoraSaida();
+        this.valor = veiculoEstacionadoRedis.getValor();
+        this.statusPagamentoEnum = veiculoEstacionadoRedis.getStatusPagamentoEnum();
     }
 
 

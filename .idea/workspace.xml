@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffe54c36-9eb0-4585-9f73-96121246367d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/useCase/VeiculoSalvarUseCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/useCase/impl/VeiculoSalvarUseCaseImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/redis/VeiculoEstacionadoRedisService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/repository/redis/VeiculoEstacionadoRedisRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/repository/redis/model/VeiculoEstacionadoRedis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/variaveis.env" beforeDir="false" afterPath="$PROJECT_DIR$/env/variaveis.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/kafka/consumer/KafkaConsumerParquimetroTopic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/kafka/consumer/VeiculoSalvarConsumerTopic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/dto/VeiculoEstacionadoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/domain/dto/VeiculoEstacionadoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/config/redis/BooleanRedisSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/config/redis/CacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parquimetro/infra/config/redis/CacheConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +64,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hb06a/OneDrive/Documentos/Github/pdi",
+    "last_opened_file_path": "C:/Users/hb06a/OneDrive/Documentos/Projetos Raia/Microserviços/financial-coast-stock-develop/financial-coast-stock-develop",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -80,11 +86,16 @@
       <recent name="com.parquimetro.application.rest.v1" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.parquimetro.app.service.redis" />
+      <recent name="com.parquimetro.infra.repository.redis" />
       <recent name="com.parquimetro.domain.dto" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Parquimetro">
     <configuration name="Parquimetro" type="Application" factoryName="Application">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/env/variaveis.env" />
+      </option>
       <option name="MAIN_CLASS_NAME" value="com.parquimetro.ParquimetroApplication" />
       <module name="parquimetro" />
       <method v="2">
@@ -133,5 +144,26 @@
       <updated>1731088559810</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/parquimetro/app/service/redis/VeiculoEstacionadoRedisService.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/parquimetro/app/rest/ParquimetroController.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
