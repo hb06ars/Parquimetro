@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Cadastrar Registro</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      position: relative; /* Para o posicionamento da mensagem */
+    }
+
+    .container {
+      text-align: center;
+      width: 300px;
+      z-index: 2; /* Garantir que o formulário esteja acima da mensagem */
+      display: block;
+    }
+
+    input[type="text"], input[type="datetime-local"], input[type="number"] {
+      font-size: 16px;
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    button:nth-of-type(2) {
+      background-color: #f44336;
+      color: white;
+    }
+
+    button:nth-of-type(2):hover {
+      background-color: #e53935;
+    }
+
+    /* Mensagem de processamento */
+    .message {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      color: #333;
+      font-weight: bold;
+      z-index: 1; /* Fica por cima do conteúdo */
+      display: none; /* Inicialmente escondido */
+    }
+
+  </style>
+  <script>
+    function voltar(){
+      window.location.href = 'index.html';
+    }
+
+    window.onload = function() {
+      document.getElementById("message").style.display = "none"; // Esconde a mensagem após o carregamento
+      document.getElementById("formContainer").style.display = "block"; // Exibe o formulário
+
+      // Define o valor atual para o campo de data e hora
+      const now = new Date();
+      const datetimeLocal = document.getElementById("horaEntrada");
+      const formattedDate = now.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:MM
+      datetimeLocal.value = formattedDate; // Define o valor do campo
+    };
+
+    // Função para cadastrar o registro
+    async function cadastrarRegistro() {
+      const placa = document.getElementById("placa").value;
+      const local = document.getElementById("local").value;
+      const horaEntrada = document.getElementById("horaEntrada").value;
+
+      const data = {
+        placa: placa,
+        local: local,
+        horaEntrada: horaEntrada,
+        horaSaida: null,
+        valor: 0.00,
+        statusPagamentoEnum: "PENDENTE_PAGAMENTO"
+      };
+
+      // Exibe a mensagem de "Aguarde, processando..." e esconde o formulário
+      document.getElementById("message").style.display = "flex";
+      document.getElementById("formContainer").style.display = "none";
+
+      try {
+        const response = await fetch('http://localhost:8080/parquimetro/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          alert(`Registro cadastrado com sucesso! Número do processo: ${result.numeroProcesso}`);
+        } else {
+          const errorData = await response.json();
+          if (errorData.message && errorData.message[0] && errorData.message[0].detalhe) {
+            alert('Erro: ' + errorData.message[0].detalhe);
+          } else {
+            alert('Erro ao cadastrar o registro.');
+          }
+        }
+      } catch (error) {
+        alert('Erro na conexão com o servidor.');
+      } finally {
+        document.getElementById("message").style.display = "none"; // Esconde a mensagem
+        document.getElementById("formContainer").style.display = "block"; // Exibe o formulário novamente
+      }
+    }
+  </script>
+</head>
+<body>
+
+<!-- Mensagem de Processamento -->
+<div class="message" id="message">
+  Aguarde, processando...
+</div>
+
+<!-- Formulário de Cadastro -->
+<div class="container" id="formContainer">
+  <h1>Cadastrar Registro</h1>
+
+  <label for="placa">Placa:</label>
+  <input type="text" id="placa" placeholder="Placa" required>
+
+  <label for="local">Local:</label>
+  <input type="text" id="local" placeholder="Local" required>
+
+  <label for="horaEntrada">Hora de Entrada:</label>
+  <input type="datetime-local" id="horaEntrada" required>
+
+  <br>
+  <button onclick="cadastrarRegistro()">Cadastrar</button>
+  <button onclick="voltar()">Voltar</button>
+</div>
+
+</body>
+</html>
