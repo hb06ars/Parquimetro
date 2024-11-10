@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
                         .build()),
                 HttpStatus.BAD_REQUEST.value()
         );
-        return new ResponseEntity<>(ListErrorResponse, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(ListErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
 
