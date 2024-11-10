@@ -9,6 +9,7 @@ import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.useCase.DevolverVeiculoUseCase;
 import com.parquimetro.domain.useCase.PagarVeiculoUseCase;
 import com.parquimetro.domain.useCase.PreencherDadosUseCase;
+import com.parquimetro.domain.util.HttpStatusCodes;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,7 +62,7 @@ public class VeiculoEstacionadoController {
                     + " 20241109205011ASD1234. Após preenchido é enviado uma mensagem e retorna o DTO para o usuário"
                     + " fazenedo com que o usuário não fique aguardando o registro ser salvo."
                     + " Obs: Não é póssível gravar um registro com a mesma placa se houver alguma pendência de pagamento.")
-    @ApiResponse(responseCode = "200", description = "Registro salvo/atualizado com sucesso.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Registro salvo/atualizado com sucesso.")
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> saveorupdate(
@@ -76,8 +77,8 @@ public class VeiculoEstacionadoController {
     @Operation( summary = "Busca o Veículo estacionado pelo número do processo",
                 description = "Busca o Veículo estacionado pelo número do processo pelo Cache,"
                             + " caso não encontrar o registro ele irá buscar no banco e salvar no Cache")
-    @ApiResponse(responseCode = "200", description = "Registro encontrado no sistema.")
-    @ApiResponse(responseCode = "404", description = "Registro não encontrado no sistema.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Registro encontrado no sistema.")
+    @ApiResponse(responseCode = HttpStatusCodes.NOT_FOUND, description = "Registro não encontrado no sistema.")
     @GetMapping("/{numeroProcesso}")
     public ResponseEntity<VeiculoEstacionadoRedis> findByNumeroProcesso(
             @Parameter(description = "Número do processo que é salvo no MongoDB.")
@@ -98,7 +99,7 @@ public class VeiculoEstacionadoController {
     @Operation( summary = "Busca todos os Veículos estacionados que estão salvos no cache",
                 description = "Busca todos os Veículos estacionados que estão salvos no cache."
                             + " Caso não encontrar, ele irá pesquisar no MongoDB e salvar no Cache")
-    @ApiResponse(responseCode = "200", description = "Busca realizada no sistema.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Busca realizada no sistema.")
     public ResponseEntity<Iterable<VeiculoEstacionadoRedis>> findAll() {
         Iterable<VeiculoEstacionadoRedis> cachedItem = veiculoRedisService.findAll();
         long size = StreamSupport.stream(cachedItem.spliterator(), false).count();
@@ -113,7 +114,7 @@ public class VeiculoEstacionadoController {
 
     @Operation( summary = "Devolve o objeto Veiculo estacionado com o valor à pagar já calculado",
                 description = "Devolve o objeto Veiculo estacionado com o valor à pagar já calculado")
-    @ApiResponse(responseCode = "200", description = "Veículo estacionado encontrado e calculado o valor à pagar.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Veículo estacionado encontrado e calculado o valor à pagar.")
     @PostMapping("/devolver")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> devolver(
@@ -125,7 +126,7 @@ public class VeiculoEstacionadoController {
     @Operation( summary = "Pagamento da Parquímetro efetuado",
                 description = "Executa o pagamento da Parquímetro e ajusta o Status para PAGO."
                             + " Após o pagameto ser efetuado, o registro será deletado apenas do Cache.")
-    @ApiResponse(responseCode = "200", description = "Veículo estacionado pago com sucesso.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Veículo estacionado pago com sucesso.")
     @PostMapping("/pagar")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> pagar(
