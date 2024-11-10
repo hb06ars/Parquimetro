@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 
 @RestController
@@ -31,7 +32,7 @@ public class TarifaController {
                 description = "Cria/Atualiza e retorna os detalhes da Tarifa do Cache com ID sempre sendo valor 1L.")
     @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Tarifa salva/atualizada")
     @PostMapping("/tarifa")
-    public ResponseEntity<TarifaDTO> tarifa(
+    public ResponseEntity<@Valid TarifaDTO> tarifa(
             @Parameter(description = "Bigdecimal com valor da tarifa.")
             @RequestParam(required = true) BigDecimal valorTarifa) {
         return ResponseEntity.ok(new TarifaDTO(tarifaRedisService

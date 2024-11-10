@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.parquimetro.infra.repository.redis.model.TarifaRedis;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -17,6 +18,8 @@ import java.math.BigDecimal;
 public class TarifaDTO implements Serializable {
 
     private Long id;
+
+    @NotBlank(message = "O nome não pode ser vazio ou nulo")
     private BigDecimal valorTarifa = BigDecimal.ZERO;
 
     public TarifaDTO(TarifaRedis tarifaRedis) {

@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -67,7 +68,7 @@ public class VeiculoEstacionadoController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> saveorupdate(
             @Parameter(description = "Objeto VeiculoEstacionadoDTO.")
-            @RequestBody VeiculoEstacionadoDTO veiculoEstacionadoDTO) throws IOException {
+            @Valid @RequestBody VeiculoEstacionadoDTO veiculoEstacionadoDTO) throws IOException {
         preencherDadosUseCase.execute(veiculoEstacionadoDTO);
         String payload = objectMapper.writeValueAsString(veiculoEstacionadoDTO);
         producer.sendMessage(topico, payload);

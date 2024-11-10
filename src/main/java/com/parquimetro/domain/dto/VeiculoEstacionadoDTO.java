@@ -6,6 +6,8 @@ import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +23,10 @@ public class VeiculoEstacionadoDTO implements Serializable {
 
     private String id;
     private String numeroProcesso;
+
+    @NotBlank(message = "O nome não pode ser vazio ou nulo")
     private String placa;
+
     private String local;
     private LocalDateTime horaEntrada = LocalDateTime.now();
     private LocalDateTime horaSaida;
