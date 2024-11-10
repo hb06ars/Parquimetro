@@ -73,8 +73,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ListErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         ListErrorResponse ListErrorResponse = new ListErrorResponse(
                 List.of(MessageError.builder()
-                        .detalhe("Erro no sistema.")
-                        .erro("Requisição inválida, preencha corretamente.")
+                        .erro("Erro no sistema.")
+                        .detalhe("Requisição inválida, preencha corretamente.")
                         .build()),
                 HttpStatus.BAD_REQUEST.value()
         );
