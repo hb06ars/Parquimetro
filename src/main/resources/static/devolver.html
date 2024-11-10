@@ -37,7 +37,7 @@
 <button onclick="window.location.href='index.html'" class="btn btn-secondary">Voltar</button>
 
 <!-- Botão de pagamento -->
-<button id="pagarBtn" class="btn btn-danger mt-3" style="display: none;">Pagar</button>
+<button id="pagarBtn" class="btn btn-danger" style="display: none;">Pagar</button>
 
 <!-- Campos para exibir o resultado em duas colunas -->
 <div class="row mt-4">
@@ -80,7 +80,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Pagamento efetuado</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="conteudoModal">
@@ -95,6 +95,12 @@
 <!-- Modal -->
 
 <script>
+
+  function limparcampos(){
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => input.value = '');
+  }
+
   function mensagem(msg) {
     var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
     document.getElementById('conteudoModal').innerHTML = msg;
@@ -172,7 +178,7 @@
     })
     .then(response => {
       if (response.ok) {
-        document.getElementById('statusPagamento').value = 'PAGO';
+        limparcampos();
         mensagem('Pagamento efetuado com sucesso');
       } else {
         mensagem('Falha ao processar o pagamento. Tente novamente.');
