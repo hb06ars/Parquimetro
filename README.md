@@ -6,6 +6,7 @@
 - URL para utilizar no postman e startar a aplicação (POST e o BODY): http://localhost:8080/
 - As variáveis de ambiente estão na pasta env.
 - As Collections de todas as requisições estão na pasta collections.
+- Swagger: http://localhost:8080/swagger-ui.html
 
 # DICAS
 
