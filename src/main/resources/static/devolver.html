@@ -100,7 +100,7 @@
   document.getElementById('pesquisarBtn').addEventListener('click', function() {
     const placa = document.getElementById('placa').value;
     if (!placa) {
-      alert('Por favor, digite uma placa.');
+      mensagem('Por favor, digite uma placa.');
       return;
     }
 
@@ -120,17 +120,17 @@
         document.getElementById('horaEntrada').value = formatDate(data.horaEntrada);
         document.getElementById('horaSaida').value = formatDate(data.horaSaida);
         document.getElementById('valor').value = `R$ ${data.valor.toFixed(2)}`;
-        document.getElementById('statusPagamento').value = data.statusPagamentoEnum;
+        document.getElementById('statusPagamento').value = data.statusPagamentoEnum.replace('_',' ');
 
         const diferencaTempo = calcularDiferencaTempo(data.horaEntrada, data.horaSaida);
         document.getElementById('diferencaTempo').value = diferencaTempo;
       } else {
-        alert('Registro não encontrado para a placa informada.');
+        mensagem('Registro não encontrado para a placa informada.');
       }
     })
     .catch(error => {
       document.getElementById('loading-message').style.display = 'none';
-      alert('Ocorreu um erro ao realizar a pesquisa. Tente novamente mais tarde.');
+      mensagem('Ocorreu um erro ao realizar a pesquisa. Tente novamente mais tarde.');
     });
   });
 </script>
