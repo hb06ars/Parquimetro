@@ -4,10 +4,12 @@ import com.parquimetro.domain.dto.MessageError;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +65,18 @@ public class GlobalExceptionHandler {
                         .erro("O registro já existe no sistema com os dados informados (CPF / Email / Passaporte).")
                         .build()),
                 HttpStatus.CONFLICT.value()
+        );
+        return new ResponseEntity<>(ListErrorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ListErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        ListErrorResponse ListErrorResponse = new ListErrorResponse(
+                List.of(MessageError.builder()
+                        .detalhe("Erro no sistema.")
+                        .erro("Requisição inválida, preencha corretamente.")
+                        .build()),
+                HttpStatus.BAD_REQUEST.value()
         );
         return new ResponseEntity<>(ListErrorResponse, HttpStatus.CONFLICT);
     }
