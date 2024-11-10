@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
   <title>Ajustar Valor da Tarifa</title>
   <style>
     html, body {
@@ -74,12 +77,17 @@
     }
   </style>
   <script>
+    function mensagem(msg) {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        document.getElementById('conteudoModal').innerHTML = msg;
+        myModal.show();
+    }
+
     function voltar() {
       window.location.href = 'index.html';
     }
 
     window.onload = async function() {
-      // Mostrar o spinner
       document.getElementById('spinner').style.display = 'block';
 
       try {
@@ -88,18 +96,16 @@
           const data = await response.json();
           document.getElementById('valorTarifa').value = data.valorTarifa.toFixed(2);
         } else {
-          alert('Erro ao buscar o valor da tarifa.');
+          mensagem('Erro ao buscar o valor da tarifa.');
         }
       } catch (error) {
-        alert('Erro na conexão com o servidor: ' + error);
+        mensagem('Erro na conexão com o servidor: ' + error);
       } finally {
-        // Esconder o spinner e mostrar o conteúdo
         document.getElementById('spinner').style.display = 'none';
         document.getElementById('content').style.display = 'block';
       }
     };
 
-    // Função para atualizar o valor da tarifa ao clicar no botão
     async function atualizarTarifa() {
       const valorTarifa = document.getElementById('valorTarifa').value;
       try {
@@ -108,12 +114,12 @@
         });
         if (response.ok) {
           const data = await response.json();
-          alert(`Tarifa atualizada para R$ ${data.valorTarifa.toFixed(2)}`);
+          mensagem(`Tarifa atualizada para R$ ${data.valorTarifa.toFixed(2)}`);
         } else {
-          alert('Erro ao atualizar o valor da tarifa.');
+          mensagem('Erro ao atualizar o valor da tarifa.');
         }
       } catch (error) {
-        alert('Erro na conexão com o servidor.');
+        mensagem('Erro na conexão com o servidor.');
       }
     }
   </script>
@@ -132,6 +138,26 @@
   <button onclick="atualizarTarifa()">Atualizar</button>
   <button onclick="voltar()">Voltar</button>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tarifa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="conteudoModal">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Entendi</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+
 
 </body>
 </html>
