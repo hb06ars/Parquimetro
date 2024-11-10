@@ -7,6 +7,7 @@
 - As variáveis de ambiente estão na pasta env.
 - As Collections de todas as requisições estão na pasta collections.
 - Swagger: http://localhost:8080/swagger-ui.html
+- Para testar, pode utilizar o index.html dentro de /resources/static
 
 # DICAS
 
