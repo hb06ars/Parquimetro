@@ -9,7 +9,7 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_URL:localhost:9092}
     topic: ${TOPIC:parquimetrotopic}
-    consumer: 
+    consumer:
       group-id: ${GROUP_CONSUMER:grupo-parquimetro}
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
