@@ -90,10 +90,28 @@
       document.getElementById("formContainer").style.display = "block"; // Exibe o formulário
 
       // Define o valor atual para o campo de data e hora
-      const now = new Date();
-      const datetimeLocal = document.getElementById("horaEntrada");
-      const formattedDate = now.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:MM
-      datetimeLocal.value = formattedDate; // Define o valor do campo
+			  const now = new Date();
+
+			  // Formata a data e hora no formato local pt-BR
+			  const formattedDate = now.toLocaleString('pt-BR', {
+				year: 'numeric',
+				month: '2-digit',
+				day: '2-digit',
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: false // Formato de 24 horas
+			  });
+
+			  // Converte a data e hora formatada para o formato necessário (YYYY-MM-DDTHH:MM)
+			  const dateOnly = formattedDate.split(' ')[0].split('/').reverse().join('-'); // Formata a data para YYYY-MM-DD
+			  const timeOnly = formattedDate.split(' ')[1]; // Pega a hora
+
+			  const finalDateTime = `${dateOnly}T${timeOnly.slice(0, 5)}`; // Formato final: YYYY-MM-DDTHH:MM
+			  // Define o valor do campo horaEntrada com o valor formatado
+			  const datetimeLocal = document.getElementById("horaEntrada");
+
+			  datetimeLocal.value = finalDateTime.replace(',','');
     };
 
     // Função para cadastrar o registro
