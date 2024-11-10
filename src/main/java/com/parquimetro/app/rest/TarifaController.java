@@ -26,7 +26,7 @@ public class TarifaController {
     @Autowired
     private TarifaRedisService tarifaRedisService;
 
-    @Operation(summary = "Cria ou atualiza o valor da tarifa.", description = "Retorna os detalhes de da Tarifa com ID sempre sendo valor 1L.")
+    @Operation(summary = "Cria ou atualiza o valor da tarifa no Cache.", description = "Cria/Atualiza e retorna os detalhes da Tarifa do Cache com ID sempre sendo valor 1L.")
     @ApiResponse(responseCode = "200", description = "Tarifa salva/atualizada")
     @PostMapping("/tarifa")
     public ResponseEntity<TarifaDTO> tarifa(
@@ -39,9 +39,9 @@ public class TarifaController {
                         .build())));
     }
 
-    @Operation(summary = "Busca o valor da tarifa.", description = "Retorna os detalhes da Tarifa.")
-    @ApiResponse(responseCode = "200", description = "Tarifa encontrada.")
-    @ApiResponse(responseCode = "404", description = "Nenhuma tarifa encontrada no sistema.")
+    @Operation(summary = "Busca o valor da tarifa pelo Cache.", description = "Retorna os detalhes da Tarifa no Cache.")
+    @ApiResponse(responseCode = "200", description = "Tarifa encontrada no Cache.")
+    @ApiResponse(responseCode = "404", description = "Nenhuma tarifa encontrada no Cache.")
     @GetMapping("/tarifa")
     public ResponseEntity<TarifaDTO> buscarTarifa() {
         TarifaRedis cachedItem = tarifaRedisService.findFirstTarifa();
