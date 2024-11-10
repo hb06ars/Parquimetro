@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ajustar Valor da Tarifa</title>
   <style>
-  
+
     html, body {
       height: 100%;
       margin: 0;
@@ -19,7 +19,7 @@
     .container {
       text-align: center;
     }
-	
+
     input[type="number"] {
       font-size: 16px;
       padding: 10px;
@@ -29,7 +29,7 @@
       border-radius: 5px;
       text-align: center;
     }
-	
+
     button {
       padding: 10px 20px;
       font-size: 16px;
@@ -40,13 +40,27 @@
       color: white;
       transition: background-color 0.3s;
     }
-	
+
     button:hover {
       background-color: #45a049;
     }
+
+    /* Estilo específico para o botão "Voltar" */
+    button:nth-of-type(2) {
+      background-color: #f44336; /* Cor de fundo vermelha */
+      color: white; /* Cor do texto */
+    }
+
+    button:nth-of-type(2):hover {
+      background-color: #e53935; /* Cor de fundo mais escura quando em hover */
+    }
   </style>
   <script>
-  
+
+    function voltar(){
+      window.location.href = 'index.html';
+    }
+
     window.onload = async function() {
       try {
         const response = await fetch('http://localhost:8080/parquimetro/tarifa');
@@ -82,13 +96,14 @@
 </head>
 <body>
 
-  <div class="container">
-    <h1>Ajustar Valor da Tarifa</h1>
-    <label for="valorTarifa">Valor da Tarifa:</label>
-    <input type="number" id="valorTarifa" step="0.01" min="0" placeholder="0.00">
-    <br>
-    <button onclick="atualizarTarifa()">Atualizar</button>
-  </div>
+<div class="container">
+  <h1>Ajustar Valor da Tarifa</h1>
+  <label for="valorTarifa">Valor da Tarifa:</label>
+  <input type="number" id="valorTarifa" step="0.01" min="0" placeholder="0.00">
+  <br>
+  <button onclick="atualizarTarifa()">Atualizar</button>
+  <button onclick="voltar()">Voltar</button>
+</div>
 
 </body>
 </html>
