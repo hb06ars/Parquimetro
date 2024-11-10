@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajustar Valor da Tarifa</title>
+  <style>
+  
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    /* Contêiner principal */
+    .container {
+      text-align: center;
+    }
+	
+    input[type="number"] {
+      font-size: 16px;
+      padding: 10px;
+      width: 200px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+    }
+	
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.3s;
+    }
+	
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script>
+  
+    window.onload = async function() {
+      try {
+        const response = await fetch('http://localhost:8080/parquimetro/tarifa');
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById('valorTarifa').value = data.valorTarifa.toFixed(2);
+        } else {
+          alert('Erro ao buscar o valor da tarifa.');
+        }
+      } catch (error) {
+        alert('Erro na conexão com o servidor: ' + error);
+      }
+    };
+
+    // Função para atualizar o valor da tarifa ao clicar no botão
+    async function atualizarTarifa() {
+      const valorTarifa = document.getElementById('valorTarifa').value;
+      try {
+        const response = await fetch(`http://localhost:8080/parquimetro/tarifa?valorTarifa=${valorTarifa}`, {
+          method: 'POST'
+        });
+        if (response.ok) {
+          const data = await response.json();
+          alert(`Tarifa atualizada para R$ ${data.valorTarifa.toFixed(2)}`);
+        } else {
+          alert('Erro ao atualizar o valor da tarifa.');
+        }
+      } catch (error) {
+        alert('Erro na conexão com o servidor.');
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Ajustar Valor da Tarifa</h1>
+    <label for="valorTarifa">Valor da Tarifa:</label>
+    <input type="number" id="valorTarifa" step="0.01" min="0" placeholder="0.00">
+    <br>
+    <button onclick="atualizarTarifa()">Atualizar</button>
+  </div>
+
+</body>
+</html>
