@@ -3,23 +3,21 @@ package com.parquimetro.app.service.redis;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.infra.repository.redis.VeiculoEstacionadoRedisRepository;
-import com.parquimetro.infra.repository.redis.VeiculoEstacionadoRedisRepositoryCustom;
 import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 public class VeiculoEstacionadoRedisService {
 
     private final VeiculoEstacionadoRedisRepository repository;
-    private final VeiculoEstacionadoRedisRepositoryCustom repositoryCustom;
 
     @Autowired
-    public VeiculoEstacionadoRedisService(VeiculoEstacionadoRedisRepository veiculoEstacionadoRedisRepository, VeiculoEstacionadoRedisRepositoryCustom repositoryCustom) {
+    public VeiculoEstacionadoRedisService(VeiculoEstacionadoRedisRepository veiculoEstacionadoRedisRepository) {
         this.repository = veiculoEstacionadoRedisRepository;
-        this.repositoryCustom = repositoryCustom;
     }
 
     public VeiculoEstacionadoRedis save(VeiculoEstacionadoDTO veiculo) {
@@ -36,10 +34,6 @@ public class VeiculoEstacionadoRedisService {
 
     public VeiculoEstacionadoRedis findById(String numeroProcesso) {
         return repository.findById(numeroProcesso).orElse(null);
-    }
-
-    public boolean encontrarPlacaNaoPaga(String placa) {
-        return repositoryCustom.encontrarPlacaNaoPaga(placa);
     }
 
     public VeiculoEstacionadoRedis update(String numeroProcesso, VeiculoEstacionado veiculoAtualizado) {
@@ -60,8 +54,17 @@ public class VeiculoEstacionadoRedisService {
         }
     }
 
+    public boolean encontrarPlacaNaoPaga(String placa) {
+        return StreamSupport
+                .stream(findAll().spliterator(), false)
+                .anyMatch(veiculo -> veiculo.getPlaca().equals(placa));
+    }
+
     public void excluir(String placa) {
-        String id = repositoryCustom.buscarIdPelaPlaca(placa);
-        repository.deleteById(id);
+        StreamSupport
+                .stream(findAll().spliterator(), false)
+                .filter(veiculo -> veiculo.getPlaca().equals(placa))
+                .findFirst()
+                .map(VeiculoEstacionadoRedis::getNumeroProcesso).ifPresent(repository::deleteById);
     }
 }
