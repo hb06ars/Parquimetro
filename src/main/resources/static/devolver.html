@@ -36,6 +36,9 @@
 <button id="pesquisarBtn" class="btn btn-primary">Pesquisar</button>
 <button onclick="window.location.href='index.html'" class="btn btn-secondary">Voltar</button>
 
+<!-- Botão de pagamento -->
+<button id="pagarBtn" class="btn btn-danger mt-3" style="display: none;">Pagar</button>
+
 <!-- Campos para exibir o resultado em duas colunas -->
 <div class="row mt-4">
   <div class="col-md-6 mb-3">
@@ -91,12 +94,11 @@
 </div>
 <!-- Modal -->
 
-
 <script>
   function mensagem(msg) {
-      var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-      document.getElementById('conteudoModal').innerHTML = msg;
-      myModal.show(); // Exibe o modal
+    var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    document.getElementById('conteudoModal').innerHTML = msg;
+    myModal.show(); // Exibe o modal
   }
 
   function formatDate(dateString) {
@@ -146,10 +148,12 @@
         document.getElementById('horaEntrada').value = formatDate(data.horaEntrada);
         document.getElementById('horaSaida').value = formatDate(data.horaSaida);
         document.getElementById('valor').value = `R$ ${data.valor.toFixed(2)}`;
-        document.getElementById('statusPagamento').value = data.statusPagamentoEnum.replace('_',' ');
+        document.getElementById('statusPagamento').value = data.statusPagamentoEnum.replace('_', ' ');
 
         const diferencaTempo = calcularDiferencaTempo(data.horaEntrada, data.horaSaida);
         document.getElementById('diferencaTempo').value = diferencaTempo;
+
+        document.getElementById('pagarBtn').style.display = 'inline-block'; // Exibe o botão de pagamento
       } else {
         mensagem('Registro não encontrado para a placa informada.');
       }
@@ -157,6 +161,25 @@
     .catch(error => {
       document.getElementById('loading-message').style.display = 'none';
       mensagem('Ocorreu um erro ao realizar a pesquisa. Tente novamente mais tarde.');
+    });
+  });
+
+  document.getElementById('pagarBtn').addEventListener('click', function() {
+    const placa = document.getElementById('placa').value;
+
+    fetch(`http://localhost:8080/parquimetro/pagar?placa=${placa}`, {
+      method: 'POST'
+    })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById('statusPagamento').value = 'PAGO';
+        mensagem('Pagamento efetuado com sucesso');
+      } else {
+        mensagem('Falha ao processar o pagamento. Tente novamente.');
+      }
+    })
+    .catch(error => {
+      mensagem('Ocorreu um erro ao processar o pagamento.');
     });
   });
 </script>
