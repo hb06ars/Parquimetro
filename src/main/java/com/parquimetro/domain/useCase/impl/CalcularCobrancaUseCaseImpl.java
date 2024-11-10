@@ -3,6 +3,7 @@ package com.parquimetro.domain.useCase.impl;
 import com.parquimetro.app.service.redis.TarifaRedisService;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.useCase.CalcularCobrancaUseCase;
+import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.redis.model.TarifaRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,8 @@ public class CalcularCobrancaUseCaseImpl implements CalcularCobrancaUseCase {
 
     private BigDecimal buscarValorTarifa() {
         TarifaRedis tarifaRedis = tarifaRedisService.findFirstTarifa();
-        return tarifaRedis.getValorTarifa();
+        if(tarifaRedis != null && tarifaRedis.getValorTarifa() != null)
+            return tarifaRedis.getValorTarifa();
+        throw new ObjectNotFoundException("Tarifa não encontrada no sistema");
     }
 }
