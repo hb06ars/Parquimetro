@@ -7,6 +7,7 @@ import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
 import com.parquimetro.domain.dto.RequestVeiculoEstacionadoDTO;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
+import com.parquimetro.domain.useCase.DeletarRegistroUseCase;
 import com.parquimetro.domain.useCase.DevolverVeiculoUseCase;
 import com.parquimetro.domain.useCase.PagarVeiculoUseCase;
 import com.parquimetro.domain.useCase.PreencherDadosUseCase;
@@ -47,6 +48,9 @@ public class VeiculoEstacionadoController {
 
     @Autowired
     private PagarVeiculoUseCase pagarVeiculoUseCase;
+
+    @Autowired
+    private DeletarRegistroUseCase deletarRegistroUseCase;
 
     @Autowired
     private VeiculoEstacionadoRedisService veiculoRedisService;
@@ -164,7 +168,7 @@ public class VeiculoEstacionadoController {
     public void deletar(
             @Parameter(description = "Número do Processo encontrado no MongoDB.")
             @RequestParam(required = true) String numeroProcesso) {
-        veiculoEstacionadoService.delete(numeroProcesso);
+        deletarRegistroUseCase.execute(numeroProcesso);
     }
 
 }
