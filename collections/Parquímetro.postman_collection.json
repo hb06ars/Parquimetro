@@ -117,7 +117,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/parquimetro/devolver?placa=RREW123",
+					"raw": "http://localhost:8080/parquimetro/devolver?placa=EES1635",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -130,7 +130,7 @@
 					"query": [
 						{
 							"key": "placa",
-							"value": "RREW123"
+							"value": "EES1635"
 						}
 					]
 				}
@@ -152,7 +152,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/parquimetro/pagar?placa=RREW123",
+					"raw": "http://localhost:8080/parquimetro/pagar?placa=EES1635",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -165,7 +165,7 @@
 					"query": [
 						{
 							"key": "placa",
-							"value": "RREW123"
+							"value": "EES1635"
 						}
 					]
 				}
@@ -178,7 +178,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/parquimetro/20241109173710RREW123",
+					"raw": "http://localhost:8080/parquimetro/20241111130217AZT5784",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -186,7 +186,7 @@
 					"port": "8080",
 					"path": [
 						"parquimetro",
-						"20241109173710RREW123"
+						"20241111130217AZT5784"
 					]
 				}
 			},
@@ -198,7 +198,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/parquimetro/672e84323ce3912cc49599b3",
+					"raw": "http://localhost:8080/parquimetro/excluir?numeroProcesso=67321eb6d8b0c72d15022a55",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -206,14 +206,20 @@
 					"port": "8080",
 					"path": [
 						"parquimetro",
-						"672e84323ce3912cc49599b3"
+						"excluir"
+					],
+					"query": [
+						{
+							"key": "numeroProcesso",
+							"value": "67321eb6d8b0c72d15022a55"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Todos",
+			"name": "Todos no Cache",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -239,7 +245,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"placa\": \"RREW123\",\r\n    \"local\": \"A33\",\r\n    \"horaEntrada\": \"2024-11-09T19:00:00.00\",\r\n    \"horaSaida\": null,\r\n    \"valor\": 0.00,\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
+					"raw": "{\r\n    \"placa\": \"EES1635\",\r\n    \"local\": \"A13\",\r\n    \"horaEntrada\": \"2024-12-09T19:00:00.00\",\r\n    \"horaSaida\": null,\r\n    \"valor\": 0.00,\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -256,6 +262,53 @@
 					"path": [
 						"parquimetro",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busca Paginada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroProcesso\": \"20241111174153ASD1234\",\r\n    \"placa\": \"ASD1234\",\r\n    \"local\": \"A12\",\r\n    \"horario\": \"2024-11-11T18:10:00\",\r\n    \"statusPagamentoEnum\": \"PENDENTE_PAGAMENTO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parquimetro/buscar?page=0&size=5&sortField=placa&sortDirection=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parquimetro",
+						"buscar"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sortField",
+							"value": "placa"
+						},
+						{
+							"key": "sortDirection",
+							"value": "desc"
+						}
 					]
 				}
 			},
