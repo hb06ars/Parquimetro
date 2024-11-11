@@ -149,7 +149,8 @@
               <th>Número Processo</th>
               <th>Placa</th>
               <th>Local</th>
-              <th>Horário</th>
+              <th>Entrada</th>
+              <th>Saída</th>
               <th>Status Pagamento</th>
               <th>Ações</th>
             </tr>
@@ -162,7 +163,8 @@
             <td>${record.numeroProcesso}</td>
             <td>${record.placa}</td>
             <td>${record.local}</td>
-            <td>${record.horario}</td>
+            <td>${record.horaEntrada}</td>
+            <td>${record.horaSaida}</td>
             <td>${record.statusPagamentoEnum}</td>
             <td>
               <button class="btn btn-danger" onclick="excluirRegistro('${record.numeroProcesso}')">
