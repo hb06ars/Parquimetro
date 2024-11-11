@@ -156,4 +156,15 @@ public class VeiculoEstacionadoController {
         return ResponseEntity.ok(veiculoEstacionadoService.buscaPaginada(dto, page, size, sortField, sortDirection));
     }
 
+    @Operation( summary = "Exclusão do Registro",
+            description = "Executa a exclusão do Registro do MongoDB.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Registro excluído com sucesso.")
+    @DeleteMapping("/excluir")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletar(
+            @Parameter(description = "Número do Processo gravado no MongoDB.")
+            @RequestParam(required = true) String numeroProcesso) {
+        veiculoEstacionadoService.delete(numeroProcesso);
+    }
+
 }
