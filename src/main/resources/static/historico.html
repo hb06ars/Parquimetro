@@ -158,7 +158,7 @@
     }
 
     // Função para formatar a data no formato dd/MM/yyyy hh:mm:ss
-    function formatarData(data) {
+    function formatarData(numeroProcesso, data) {
         if(data != null){
             const date = new Date(data);
             const dia = String(date.getDate()).padStart(2, '0');
@@ -227,13 +227,13 @@
       records.forEach(record => {
         tableHtml += `
           <tr>
-            <td>${record.numeroProcesso}</td>
-            <td>${record.placa}</td>
-            <td>${record.local}</td>
-            <td>${formatarData(record.horaEntrada)}</td>
-            <td>${formatarData(record.horaSaida)}</td>
-            <td>${formatarEnum(record.statusPagamentoEnum)}</td>
-            <td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${record.numeroProcesso}</td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${record.placa}</td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${record.local}</td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${formatarData(record.numeroProcesso, record.horaEntrada)}</td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${formatarData(record.numeroProcesso, record.horaSaida)}</td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}" >${formatarEnum(record.statusPagamentoEnum)}</td>
+            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">
               <button class="btn btn-danger" onclick="excluirRegistro('${record.placa}','${record.numeroProcesso}')">
                 <i class="fas fa-trash"></i> Excluir
               </button>
