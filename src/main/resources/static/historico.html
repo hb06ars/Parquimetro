@@ -225,15 +225,16 @@
           <tbody>`;
 
       records.forEach(record => {
+        var estiloLinha = `style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : '#db9c9c'}"`;
         tableHtml += `
           <tr>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${record.numeroProcesso}</td>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${record.placa}</td>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${record.local}</td>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${formatarData(record.numeroProcesso, record.horaEntrada)}</td>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">${formatarData(record.numeroProcesso, record.horaSaida)}</td>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}" >${formatarEnum(record.statusPagamentoEnum)}</td>
-            <td style="background-color:${record.statusPagamentoEnum === 'PAGO' ? '#c2e5c2' : 'white'}">
+            <td ${estiloLinha} >${record.numeroProcesso}</td>
+            <td ${estiloLinha} >${record.placa}</td>
+            <td ${estiloLinha} >${record.local}</td>
+            <td ${estiloLinha} >${formatarData(record.numeroProcesso, record.horaEntrada)}</td>
+            <td ${estiloLinha} >${formatarData(record.numeroProcesso, record.horaSaida)}</td>
+            <td ${estiloLinha} >${formatarEnum(record.statusPagamentoEnum)}</td>
+            <td ${estiloLinha}>
               <button class="btn btn-danger" onclick="excluirRegistro('${record.placa}','${record.numeroProcesso}')">
                 <i class="fas fa-trash"></i> Excluir
               </button>
