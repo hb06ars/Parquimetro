@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface VeiculoEstacionadoCustomRepository{
-    Page<VeiculoEstacionado> findAllByCriteria(RequestVeiculoEstacionadoDTO dto, Pageable pageable);
+    Page<VeiculoEstacionado> findAllByCriteria(RequestVeiculoEstacionadoDTO dto, Pageable pageable, String sortField, String sortDirection);
 }

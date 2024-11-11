@@ -6,6 +6,7 @@ import com.parquimetro.infra.repository.mongo.VeiculoEstacionadoCustomRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,7 +20,7 @@ public class VeiculoEstacionadoCustomRepositoryImpl implements VeiculoEstacionad
     private MongoTemplate mongoTemplate;
 
     @Override
-    public Page<VeiculoEstacionado> findAllByCriteria(RequestVeiculoEstacionadoDTO dto, Pageable pageable) {
+    public Page<VeiculoEstacionado> findAllByCriteria(RequestVeiculoEstacionadoDTO dto, Pageable pageable, String sortField, String sortDirection) {
         Query query = new Query();
 
         if (dto.getNumeroProcesso() != null) {
@@ -43,6 +44,11 @@ public class VeiculoEstacionadoCustomRepositoryImpl implements VeiculoEstacionad
         }
 
         long total = mongoTemplate.count(query, VeiculoEstacionado.class);
+
+        // Aplica o sort se houver
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Sort sort = Sort.by(direction, sortField);
+        query.with(sort);
 
         // Aplica a paginação
         query.with(pageable);

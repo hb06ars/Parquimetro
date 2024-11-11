@@ -108,6 +108,8 @@
 <script>
     let currentPage = 0; // Página atual
     const pageSize = 10; // Tamanho da página fixo
+    let sortField = 'horaEntrada';
+    let sortDirection = 'asc';
 
     function limpar(){
         document.getElementById('numeroProcesso').value = "";
@@ -160,7 +162,7 @@
       };
 
       try {
-        const response = await fetch(`http://localhost:8080/parquimetro/buscar?page=${currentPage}&size=${pageSize}`, {
+        const response = await fetch(`http://localhost:8080/parquimetro/buscar?page=${currentPage}&size=${pageSize}&sortField=${sortField}&sortDirection=${sortDirection}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)

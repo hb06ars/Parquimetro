@@ -149,8 +149,11 @@ public class VeiculoEstacionadoController {
     public ResponseEntity<Page<VeiculoEstacionado>> buscaPaginada(
             @RequestBody(required = false) RequestVeiculoEstacionadoDTO  dto,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(veiculoEstacionadoService.buscaPaginada(dto, page, size));
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "horaEntrada") String sortField,
+            @RequestParam(defaultValue = "asc") String sortDirection
+    ) {
+        return ResponseEntity.ok(veiculoEstacionadoService.buscaPaginada(dto, page, size, sortField, sortDirection));
     }
 
 }

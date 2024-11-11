@@ -71,8 +71,8 @@ public class VeiculoEstacionadoService {
         );
     }
 
-    public Page<VeiculoEstacionado> buscaPaginada(RequestVeiculoEstacionadoDTO dto, int page, int size) {
+    public Page<VeiculoEstacionado> buscaPaginada(RequestVeiculoEstacionadoDTO dto, int page, int size, String sortField, String sortDirection) {
         Pageable pageable = PageRequest.of(page, size);
-        return customRepository.findAllByCriteria(dto, pageable);
+        return customRepository.findAllByCriteria(dto, pageable, sortField, sortDirection);
     }
 }
