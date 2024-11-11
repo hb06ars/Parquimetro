@@ -38,21 +38,54 @@
           margin-top: 30px; /* Espaço entre o título e os botões */
         }
 
-        /* Estiliza os botões */
+        /* Estilos gerais para os botões */
         .button-container button {
           padding: 15px 30px;
           font-size: 16px;
           border: none;
           border-radius: 5px;
           cursor: pointer;
-          background-color: #4CAF50;
           color: white;
           transition: background-color 0.3s;
+        }
+
+        /* Botões com cores específicas */
+        .button-container .button-tarifa {
+          background-color: #4CAF50; /* Verde */
+        }
+
+        .button-container .button-registrar {
+          background-color: #2196F3; /* Azul */
+        }
+
+        .button-container .button-devolver {
+          background-color: #FF9800; /* Laranja */
+        }
+
+        .button-container .button-historico {
+          background-color: #9C27B0; /* Roxo */
         }
 
         /* Efeito de hover nos botões */
         .button-container button:hover {
           background-color: #45a049;
+        }
+
+        /* Efeito de hover para cada botão com cores diferentes */
+        .button-container .button-tarifa:hover {
+          background-color: #45a049; /* Verde mais escuro */
+        }
+
+        .button-container .button-registrar:hover {
+          background-color: #1976D2; /* Azul mais escuro */
+        }
+
+        .button-container .button-devolver:hover {
+          background-color: #FB8C00; /* Laranja mais escuro */
+        }
+
+        .button-container .button-historico:hover {
+          background-color: #7B1FA2; /* Roxo mais escuro */
         }
     </style>
 </head>
@@ -66,10 +99,10 @@
 <br>
 <!-- Contêiner de botões -->
 <div class="button-container">
-    <button onclick="window.location.href='tarifa.html'">Ajustar Valor da Tarifa</button>
-    <button onclick="window.location.href='registrar.html'">Registrar</button>
-    <button onclick="window.location.href='devolver.html'">Devolver</button>
-    <button onclick="window.location.href='historico.html'">Histórico</button>
+    <button class="button-tarifa" onclick="window.location.href='tarifa.html'">Ajustar Valor da Tarifa</button>
+    <button class="button-registrar" onclick="window.location.href='registrar.html'">Registrar</button>
+    <button class="button-devolver" onclick="window.location.href='devolver.html'">Devolver</button>
+    <button class="button-historico" onclick="window.location.href='historico.html'">Histórico</button>
 </div>
 
 </body>
