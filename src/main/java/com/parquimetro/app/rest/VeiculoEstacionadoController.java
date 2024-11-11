@@ -144,7 +144,7 @@ public class VeiculoEstacionadoController {
     @Operation( summary = "Busca paginada",
             description = "Busca todos os registros salvos no MongoDB.")
     @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Busca realizada com sucesso.")
-    @GetMapping("/buscar")
+    @PostMapping("/buscar")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<VeiculoEstacionado>> buscaPaginada(
             @RequestBody(required = false) RequestVeiculoEstacionadoDTO  dto,
