@@ -21,7 +21,6 @@ public class DevolverVeiculoUseCaseImpl implements DevolverVeiculoUseCase {
     public VeiculoEstacionadoDTO execute(String placa){
         VeiculoEstacionado veiculoEstacionado = veiculoEstacionadoService.findByPlacaPendentePagamento(placa);
         calcularCobrancaUseCase.execute(veiculoEstacionado);
-        veiculoEstacionadoService.save(veiculoEstacionado);
         return new VeiculoEstacionadoDTO(veiculoEstacionado);
     }
 }

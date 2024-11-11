@@ -116,7 +116,7 @@ public class VeiculoEstacionadoController {
     @Operation( summary = "Devolve o objeto Veiculo estacionado com o valor à pagar já calculado",
                 description = "Devolve o objeto Veiculo estacionado com o valor à pagar já calculado")
     @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Veículo estacionado encontrado e calculado o valor à pagar.")
-    @PostMapping("/devolver")
+    @GetMapping("/devolver")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<VeiculoEstacionadoDTO> devolver(
             @Parameter(description = "Número da placa do veículo.")
