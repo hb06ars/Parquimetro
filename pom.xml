@@ -12,7 +12,7 @@
 
 	<groupId>parquimetro</groupId>
 	<artifactId>parquimetro</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>parquimetro</name>
 	<description>PARQUIMETRO</description>
 	<properties>

@@ -13,7 +13,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("API Parquímetro")
-                        .version("1.0")
+                        .version("1.0.0")
                         .description("Documentação da API do Parquímetro"));
     }
 }

@@ -1,4 +1,4 @@
-package com.parquimetro.infra.repository.postgres;
+package com.parquimetro.infra.repository.mongo;
 
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import org.springframework.data.mongodb.repository.MongoRepository;

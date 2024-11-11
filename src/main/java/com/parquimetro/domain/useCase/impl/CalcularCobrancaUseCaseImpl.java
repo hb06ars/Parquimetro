@@ -29,7 +29,6 @@ public class CalcularCobrancaUseCaseImpl implements CalcularCobrancaUseCase {
                 .between(veiculoEstacionado.getHoraEntrada(), veiculoEstacionado.getHoraSaida())
                 .toMinutes());
 
-        // Cálculo baseado em HORAS. Caso seja menor que 30min cobrará apenas a metade da tarifa.
         if (diferencaMinutos.compareTo(new BigDecimal("30")) <= 0){
             valorPagar = valorTarifa.divide(new BigDecimal("2"), RoundingMode.HALF_UP);
         }

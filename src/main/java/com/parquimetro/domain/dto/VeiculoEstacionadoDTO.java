@@ -7,7 +7,6 @@ import com.parquimetro.infra.repository.redis.model.VeiculoEstacionadoRedis;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

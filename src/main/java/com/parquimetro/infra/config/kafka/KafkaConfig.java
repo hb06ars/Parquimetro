@@ -29,7 +29,6 @@ public class KafkaConfig {
     @Value("${spring.kafka.topic}")
     private String TOPIC;
 
-    // Configuração do Producer
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -46,7 +45,6 @@ public class KafkaConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    // Configuração do Consumer
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
