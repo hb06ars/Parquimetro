@@ -134,6 +134,10 @@
     let sortField = 'horaEntrada';
     let sortDirection = 'asc';
 
+    window.onload = function() {
+        buscarRegistros();
+    }
+
     function limpar(){
         document.getElementById('numeroProcesso').value = "";
         document.getElementById('placa').value = "";
