@@ -1,6 +1,10 @@
 package com.parquimetro.infra.repository.mongo;
 
+import com.parquimetro.domain.dto.RequestVeiculoEstacionadoDTO;
+import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

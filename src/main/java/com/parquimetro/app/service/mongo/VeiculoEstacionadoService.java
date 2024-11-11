@@ -1,9 +1,14 @@
 package com.parquimetro.app.service.mongo;
 
+import com.parquimetro.domain.dto.RequestVeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.infra.exceptions.ObjectNotFoundException;
+import com.parquimetro.infra.repository.mongo.VeiculoEstacionadoCustomRepository;
 import com.parquimetro.infra.repository.mongo.VeiculoEstacionadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +18,12 @@ import java.util.Optional;
 public class VeiculoEstacionadoService {
 
     private final VeiculoEstacionadoRepository repository;
+    private final VeiculoEstacionadoCustomRepository customRepository;
 
     @Autowired
-    public VeiculoEstacionadoService(VeiculoEstacionadoRepository veiculoEstacionadoRepository) {
+    public VeiculoEstacionadoService(VeiculoEstacionadoRepository veiculoEstacionadoRepository, VeiculoEstacionadoCustomRepository customRepository) {
         this.repository = veiculoEstacionadoRepository;
+        this.customRepository = customRepository;
     }
 
     public VeiculoEstacionado save(VeiculoEstacionado veiculo) {
@@ -62,5 +69,10 @@ public class VeiculoEstacionadoService {
         return repository.findByPlacaPendentePagamento(placa).orElseThrow( () ->
             new ObjectNotFoundException("Veículo com Número de Placa " + placa + " pendente não encontrado.")
         );
+    }
+
+    public Page<VeiculoEstacionado> buscaPaginada(RequestVeiculoEstacionadoDTO dto, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return customRepository.findAllByCriteria(dto, pageable);
     }
 }

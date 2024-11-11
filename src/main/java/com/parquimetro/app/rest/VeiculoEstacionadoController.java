@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parquimetro.app.service.kafka.producer.KafkaProducer;
 import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
 import com.parquimetro.app.service.redis.VeiculoEstacionadoRedisService;
+import com.parquimetro.domain.dto.RequestVeiculoEstacionadoDTO;
 import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.entity.VeiculoEstacionado;
 import com.parquimetro.domain.useCase.DevolverVeiculoUseCase;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +50,9 @@ public class VeiculoEstacionadoController {
 
     @Autowired
     private VeiculoEstacionadoRedisService veiculoRedisService;
+
+    @Autowired
+    private VeiculoEstacionadoService veiculoEstacionadoService;
 
     @Autowired
     private KafkaProducer producer;
@@ -134,6 +139,18 @@ public class VeiculoEstacionadoController {
             @Parameter(description = "Número da placa do veículo.")
             @RequestParam(required = true) String placa) throws IOException {
         return ResponseEntity.ok(pagarVeiculoUseCase.execute(placa));
+    }
+
+    @Operation( summary = "Busca paginada",
+            description = "Busca todos os registros salvos no MongoDB.")
+    @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Busca realizada com sucesso.")
+    @GetMapping("/buscar")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Page<VeiculoEstacionado>> buscaPaginada(
+            @RequestBody(required = false) RequestVeiculoEstacionadoDTO  dto,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(veiculoEstacionadoService.buscaPaginada(dto, page, size));
     }
 
 }
