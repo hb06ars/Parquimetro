@@ -20,7 +20,7 @@ public class VeiculoEstacionadoCustomRepositoryImpl implements VeiculoEstacionad
 
     @Override
     public Page<VeiculoEstacionado> findAllByCriteria(RequestVeiculoEstacionadoDTO dto, Pageable pageable) {
-        Query query = new Query().with(pageable);
+        Query query = new Query();
 
         if (dto.getNumeroProcesso() != null) {
             query.addCriteria(Criteria.where("numeroProcesso").is(dto.getNumeroProcesso()));
@@ -43,6 +43,10 @@ public class VeiculoEstacionadoCustomRepositoryImpl implements VeiculoEstacionad
         }
 
         long total = mongoTemplate.count(query, VeiculoEstacionado.class);
+
+        // Aplica a paginação
+        query.with(pageable);
+
         var veiculos = mongoTemplate.find(query, VeiculoEstacionado.class);
 
         return PageableExecutionUtils.getPage(veiculos, pageable, () -> total);

@@ -106,6 +106,9 @@
 </div>
 
 <script>
+    let currentPage = 0; // Página atual
+    const pageSize = 10; // Tamanho da página fixo
+
     function limpar(){
         document.getElementById('numeroProcesso').value = "";
         document.getElementById('placa').value = "";
@@ -124,6 +127,7 @@
     function formatarEnum(data) {
         return data.replace('_',' ');
     }
+
     // Função para formatar a data no formato dd/MM/yyyy hh:mm:ss
     function formatarData(data) {
         if(data != null){
@@ -155,10 +159,8 @@
         statusPagamentoEnum
       };
 
-      console.log(JSON.stringify(data))
-
       try {
-        const response = await fetch('http://localhost:8080/parquimetro/buscar?page=0&size=10', {
+        const response = await fetch(`http://localhost:8080/parquimetro/buscar?page=${currentPage}&size=${pageSize}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -214,63 +216,18 @@
     function renderPagination(totalPages) {
       let paginationHtml = '';
       for (let i = 0; i < totalPages; i++) {
+        const activeClass = i === currentPage ? 'active' : '';
         paginationHtml += `
-          <li class="page-item"><a class="page-link" href="#" onclick="changePage(${i})">${i + 1}</a></li>
+          <li class="page-item ${activeClass}"><a class="page-link" href="#" onclick="changePage(${i})">${i + 1}</a></li>
         `;
       }
       document.getElementById("pagination").innerHTML = paginationHtml;
     }
 
     // Função para alterar a página de resultados
-    async function changePage(pageNumber) {
-      console.log(pageNumber);
-
-      const numeroProcesso = document.getElementById("numeroProcesso").value;
-      const placa = document.getElementById("placa").value;
-      const local = document.getElementById("local").value;
-      const horario = document.getElementById("horario").value;
-      const statusPagamentoEnum = document.getElementById("statusPagamentoEnum").value;
-
-      const data = {
-        numeroProcesso,
-        placa,
-        local,
-        horario,
-        statusPagamentoEnum
-      };
-
-      try {
-        const response = await fetch(`http://localhost:8080/parquimetro/buscar?page=${pageNumber}&size=10`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        renderResults(result.content);
-        renderPagination(result.totalPages);
-      } catch (error) {
-        alert("Erro ao buscar os registros");
-      }
-    }
-
-    // Função para excluir um registro com DELETE
-    async function excluirRegistro(numeroProcesso) {
-      try {
-        const response = await fetch(`http://localhost:8080/parquimetro/excluir/${numeroProcesso}`, {
-          method: 'DELETE'
-        });
-
-        if (response.ok) {
-          alert("Registro excluído com sucesso!");
-          // Atualize a lista após a exclusão
-          changePage(0); // Recarregar a primeira página
-        } else {
-          alert("Erro ao excluir o registro");
-        }
-      } catch (error) {
-        alert("Erro ao excluir o registro");
-      }
+    function changePage(pageNumber) {
+      currentPage = pageNumber;
+      document.getElementById("searchForm").submit();
     }
 </script>
 
