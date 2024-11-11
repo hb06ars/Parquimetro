@@ -162,7 +162,7 @@ public class VeiculoEstacionadoController {
     @DeleteMapping("/excluir")
     @ResponseStatus(HttpStatus.OK)
     public void deletar(
-            @Parameter(description = "Número do Processo gravado no MongoDB.")
+            @Parameter(description = "Número do Processo encontrado no MongoDB.")
             @RequestParam(required = true) String numeroProcesso) {
         veiculoEstacionadoService.delete(numeroProcesso);
     }

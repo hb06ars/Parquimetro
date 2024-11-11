@@ -271,7 +271,7 @@
     function confirmaExclusao(){
         var numeroProcessoExclusao = document.getElementById('numeroProcessoExclusao').value;
         var placaExclusao = document.getElementById('placaExclusao').value;
-        excluir(numeroProcessoExclusao);
+        excluir(numeroProcessoExclusao, placaExclusao);
     }
 
     function mensagem(msg) {
@@ -281,16 +281,14 @@
         myModal.show();
     }
 
-    function excluir(numeroProcesso){
-        console.log('Excluído: ' + numeroProcesso);
-
+    function excluir(numeroProcesso, placa){
         fetch(`http://localhost:8080/parquimetro/excluir?numeroProcesso=${numeroProcesso}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })
         .then(response => {
             if (response.ok) {
-                mensagem('Exclusão realizada com sucesso para a placa <b>' + placaExclusao + '</b>');
+                mensagem('Exclusão realizada com sucesso para a placa <b>' + placa + '</b>');
                 document.getElementById('numeroProcessoExclusao').value = '';
                 document.getElementById('placaExclusao').value = '';
                 buscarRegistros();
