@@ -145,8 +145,12 @@
         return 'ESTÁ NO ESTACIONAMENTO';
     }
 
-    document.getElementById("searchForm").addEventListener("submit", async function (e) {
+    document.getElementById("searchForm").addEventListener("submit", function (e) {
       e.preventDefault();
+      buscarRegistros();
+    });
+
+    async function buscarRegistros() {
       const numeroProcesso = validarCampo(document.getElementById("numeroProcesso").value);
       const placa = validarCampo(document.getElementById("placa").value);
       const local = validarCampo(document.getElementById("local").value);
@@ -174,7 +178,7 @@
       } catch (error) {
         alert("Erro ao buscar os registros");
       }
-    });
+    }
 
     // Função para renderizar os resultados na tabela
     function renderResults(records) {
@@ -229,7 +233,7 @@
     // Função para alterar a página de resultados
     function changePage(pageNumber) {
       currentPage = pageNumber;
-      document.getElementById("searchForm").submit();
+      buscarRegistros(); // Refaça a busca com a nova página
     }
 </script>
 
