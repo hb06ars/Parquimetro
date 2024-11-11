@@ -105,6 +105,29 @@
     </nav>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">EXCLUSÃO</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="conteudoModal">
+                ...
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="numeroProcessoExclusao" />
+                <input type="hidden" id="placaExclusao" />
+                <button id="btnFechar" type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnConfirma" type="button" onclick="confirmaExclusao()" class="btn btn-danger" data-bs-dismiss="modal">Sim, quero Excluir!</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+
 <script>
     let currentPage = 0; // Página atual
     const pageSize = 6; // Tamanho da página fixo
@@ -207,7 +230,7 @@
             <td>${formatarData(record.horaSaida)}</td>
             <td>${formatarEnum(record.statusPagamentoEnum)}</td>
             <td>
-              <button class="btn btn-danger" onclick="excluirRegistro('${record.numeroProcesso}')">
+              <button class="btn btn-danger" onclick="excluirRegistro('${record.placa}','${record.numeroProcesso}')">
                 <i class="fas fa-trash"></i> Excluir
               </button>
             </td>
@@ -235,6 +258,37 @@
       currentPage = pageNumber;
       buscarRegistros(); // Refaça a busca com a nova página
     }
+
+    function excluirRegistro(placa, numeroProcesso) {
+        document.getElementById('numeroProcessoExclusao').value = numeroProcesso;
+        document.getElementById('placaExclusao').value = placa;
+        document.getElementById('btnConfirma').style.display = "block";
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        document.getElementById('conteudoModal').innerHTML = 'Tem certeza que deseja excluir o registro da placa <b>' + placa + '</b>?';
+        myModal.show();
+    }
+
+    function confirmaExclusao(){
+        var numeroProcessoExclusao = document.getElementById('numeroProcessoExclusao').value;
+        var placaExclusao = document.getElementById('placaExclusao').value;
+        excluir(numeroProcessoExclusao);
+        mensagem('Exclusão realizada com sucesso para a placa <b>' + placaExclusao + '</b>');
+    }
+
+    function excluir(numeroProcesso){
+
+        console.log('Excluido: ' + numeroProcesso)
+        document.getElementById('numeroProcessoExclusao').value = '';
+        document.getElementById('placaExclusao').value = '';
+    }
+
+    function mensagem(msg) {
+        document.getElementById('btnConfirma').style.display = "none";
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        document.getElementById('conteudoModal').innerHTML = msg;
+        myModal.show();
+    }
+
 </script>
 
 </body>
