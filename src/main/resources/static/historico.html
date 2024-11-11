@@ -18,10 +18,10 @@
         }
 
         .container {
-          max-width: 1000px;
+          max-width: 100%;
           margin: 0 auto;
           background-color: #fff;
-          padding: 30px;
+          padding: 20px;
           border-radius: 8px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -80,7 +80,10 @@
                     <option value="PAGO">PAGOS</option>
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
+                <button onclick="limpar()" type="button" class="btn btn-warning w-100">Limpar</button>
+            </div>
+            <div class="col-md-2">
                 <button type="submit" class="btn btn-primary w-100">Buscar</button>
             </div>
         </div>
@@ -100,11 +103,37 @@
 </div>
 
 <script>
+    function limpar(){
+        document.getElementById('numeroProcesso').value = "";
+        document.getElementById('placa').value = "";
+        document.getElementById('local').value = "";
+        document.getElementById('horario').value = "";
+        document.getElementById('statusPagamentoEnum').value = '';
+    }
+
     function validarCampo(valor){
         if(valor != null && valor.trim() !== "")
             return valor;
         else
             return null;
+    }
+
+    function formatarEnum(data) {
+        return data.replace('_',' ');
+    }
+    // Função para formatar a data no formato dd/MM/yyyy hh:mm:ss
+    function formatarData(data) {
+        if(data != null){
+            const date = new Date(data);
+            const dia = String(date.getDate()).padStart(2, '0');
+            const mes = String(date.getMonth() + 1).padStart(2, '0');
+            const ano = date.getFullYear();
+            const horas = String(date.getHours()).padStart(2, '0');
+            const minutos = String(date.getMinutes()).padStart(2, '0');
+            const segundos = String(date.getSeconds()).padStart(2, '0');
+            return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
+        }
+        return 'ESTÁ NO ESTACIONAMENTO';
     }
 
     document.getElementById("searchForm").addEventListener("submit", async function (e) {
@@ -163,9 +192,9 @@
             <td>${record.numeroProcesso}</td>
             <td>${record.placa}</td>
             <td>${record.local}</td>
-            <td>${record.horaEntrada}</td>
-            <td>${record.horaSaida}</td>
-            <td>${record.statusPagamentoEnum}</td>
+            <td>${formatarData(record.horaEntrada)}</td>
+            <td>${formatarData(record.horaSaida)}</td>
+            <td>${formatarEnum(record.statusPagamentoEnum)}</td>
             <td>
               <button class="btn btn-danger" onclick="excluirRegistro('${record.numeroProcesso}')">
                 <i class="fas fa-trash"></i> Excluir
@@ -225,21 +254,22 @@
     // Função para excluir um registro com DELETE
     async function excluirRegistro(numeroProcesso) {
       try {
-        const response = await fetch(`http://localhost:8080/deletar?numeroProcesso=${numeroProcesso}`, {
+        const response = await fetch(`http://localhost:8080/parquimetro/excluir/${numeroProcesso}`, {
           method: 'DELETE'
         });
 
         if (response.ok) {
-          alert('Registro excluído com sucesso!');
-          // Recarregar os resultados após exclusão
-          document.getElementById("searchForm").submit();
+          alert("Registro excluído com sucesso!");
+          // Atualize a lista após a exclusão
+          changePage(0); // Recarregar a primeira página
         } else {
-          alert('Erro ao excluir o registro');
+          alert("Erro ao excluir o registro");
         }
       } catch (error) {
-        alert('Erro na conexão com o servidor');
+        alert("Erro ao excluir o registro");
       }
     }
 </script>
+
 </body>
 </html>
