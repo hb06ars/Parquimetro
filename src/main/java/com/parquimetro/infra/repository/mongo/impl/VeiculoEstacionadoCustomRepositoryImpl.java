@@ -31,6 +31,9 @@ public class VeiculoEstacionadoCustomRepositoryImpl implements VeiculoEstacionad
         if (dto.getLocal() != null) {
             query.addCriteria(Criteria.where("local").is(dto.getLocal()));
         }
+        if (dto.getStatusPagamentoEnum() != null) {
+            query.addCriteria(Criteria.where("statusPagamentoEnum").is(dto.getStatusPagamentoEnum()));
+        }
         if (dto.getHorario() != null) {
             Criteria criteriaEntrada = Criteria.where("horaEntrada").lte(dto.getHorario());
             Criteria criteriaSaida = new Criteria().orOperator(
