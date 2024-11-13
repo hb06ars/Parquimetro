@@ -96,6 +96,7 @@ class TarifaRedisServiceTest {
     @Test
     void testUpdateSuccess() {
         TarifaDTO updatedDTO = new TarifaDTO();
+        updatedDTO.setId(1L);
         updatedDTO.setValorTarifa(BigDecimal.valueOf(20.0));
 
         TarifaRedis updatedTarifaRedis = new TarifaRedis(updatedDTO);
