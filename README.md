@@ -35,6 +35,7 @@ Nela é feito o calculo, é atualizado no MongoDB com status = PAGO e o registro
 - Antes de iniciar utilize o docker-compose para subir o ambiente, KafkaDrop para ver os tópicos, ZooKeeper, MongoDB e Redis. Todos dentro do container parquimetro.
 - O Kafka Drop utilizamos para visualizar os tópicos pelo navegador. (http://localhost:9000/)
 - URL para utilizar no postman e startar a aplicação (POST e o BODY): http://localhost:8080/
+- Sonar URL: http://localhost:9008/
 - Cache: pode ser utilizado o Redis Insight conectando com a url: 127.0.0.1:6379
 - Swagger: http://localhost:8080/swagger-ui.html
 - Teste da Aplicação: http://localhost:8080/index.html
@@ -43,6 +44,16 @@ Nela é feito o calculo, é atualizado no MongoDB com status = PAGO e o registro
 - Para testar, pode utilizar o index.html dentro de /resources/static
 
 # DICAS
+
+### SONAR: <br>
+    Crie um projeto local no sonar através da URL: http://localhost:9008/projects.<br>
+    Após a criação será gerado o comando para execução, utilize o comando maven, exemplo:<br>
+    mvn clean verify sonar:sonar -Dsonar.projectKey=Parquimetro -Dsonar.projectName='Parquimetro' -Dsonar.host.url=http://localhost:9008 -Dsonar.token=sqp_7aef4486d8f65650be7052f9b333342b6ede6686
+    <br>Exeutando o comando, será gerado a url para verificar a cobertura do Sonar.
+
+### JMETER: <br>
+    Na pasta: /src/test/jmeter há um arquivo padrão para realizar testes de stress em algumas requisições.
+    Baixe o jmeter no site: https://jmeter.apache.org/download_jmeter.cgi e siga as instruções no jMeter.txt
 
 ### URI MongoDB: <br>
     mongodb://parquimetrousr:Parquimetro2024@localhost:27017

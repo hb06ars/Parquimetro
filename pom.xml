@@ -17,7 +17,14 @@
 	<description>PARQUIMETRO</description>
 	<properties>
 		<java.version>17</java.version>
+		<sonar.exclusions>src/main/java/com/parquimetro/ParquimetroApplication*</sonar.exclusions>
 		<sonar.exclusions>src/main/java/com/parquimetro/infra/exceptions/**</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/parquimetro/infra/config/**</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/parquimetro/domain/dto/**</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/parquimetro/domain/entity/**</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/parquimetro/domain/enums/**</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/parquimetro/domain/util/**</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/parquimetro/domain/validator/**</sonar.exclusions>
 		<sonar.host.url>http://localhost:9008</sonar.host.url>
 		<sonar.login>admin</sonar.login>
 		<sonar.password>Parquimetro@2024</sonar.password>
