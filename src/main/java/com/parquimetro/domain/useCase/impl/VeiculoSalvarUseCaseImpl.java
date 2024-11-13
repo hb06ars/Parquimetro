@@ -39,7 +39,7 @@ public class VeiculoSalvarUseCaseImpl implements VeiculoSalvarUseCase {
         redisService.save(veiculoEstacionadoDTO);
     }
 
-    private static void preencherCampos(VeiculoEstacionado veiculoEstacionadoExistente, VeiculoEstacionadoDTO veiculoEstacionadoDTO) {
+    public static void preencherCampos(VeiculoEstacionado veiculoEstacionadoExistente, VeiculoEstacionadoDTO veiculoEstacionadoDTO) {
         veiculoEstacionadoDTO.setId(veiculoEstacionadoExistente.getId());
         veiculoEstacionadoDTO.setNumeroProcesso(veiculoEstacionadoExistente.getNumeroProcesso());
 

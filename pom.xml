@@ -17,6 +17,7 @@
 	<description>PARQUIMETRO</description>
 	<properties>
 		<java.version>17</java.version>
+		<sonar.exclusions>src/main/java/com/parquimetro/infra/exceptions/**</sonar.exclusions>
 	</properties>
 
 	<dependencies>

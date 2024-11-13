@@ -41,7 +41,7 @@ public class CalcularCobrancaUseCaseImpl implements CalcularCobrancaUseCase {
         return veiculoEstacionado;
     }
 
-    private BigDecimal buscarValorTarifa() {
+    public BigDecimal buscarValorTarifa() {
         TarifaRedis tarifaRedis = tarifaRedisService.findFirstTarifa();
         if(tarifaRedis != null && tarifaRedis.getValorTarifa() != null)
             return tarifaRedis.getValorTarifa();
