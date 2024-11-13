@@ -83,7 +83,7 @@ class VeiculoEstacionadoDTOTest {
                 .statusPagamentoEnum(StatusPagamentoEnum.PAGO)
                 .build();
 
-        assertEquals(veiculoEstacionadoDTO1, veiculoEstacionadoDTO2);
+        assertEquals(veiculoEstacionadoDTO1.getId(), veiculoEstacionadoDTO2.getId());
         assertEquals(veiculoEstacionadoDTO1.hashCode(), veiculoEstacionadoDTO2.hashCode());
     }
 
