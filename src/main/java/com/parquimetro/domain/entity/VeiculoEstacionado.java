@@ -22,17 +22,25 @@ public class VeiculoEstacionado  implements Serializable {
 
     @Id
     private String id;
+
     @Indexed(unique = true)
     private String numeroProcesso;
 
     @NotBlank(message = "O nome não pode ser vazio ou nulo")
+    @Indexed
     private String placa;
 
-    private String local;
+    @Indexed
     private LocalDateTime horaEntrada = LocalDateTime.now();
+
+    @Indexed
     private LocalDateTime horaSaida;
-    private BigDecimal valor = BigDecimal.ZERO;
+
+    @Indexed
     private StatusPagamentoEnum statusPagamentoEnum = StatusPagamentoEnum.PENDENTE_PAGAMENTO;
+
+    private String local;
+    private BigDecimal valor = BigDecimal.ZERO;
 
     public VeiculoEstacionado(VeiculoEstacionadoDTO dto) {
         this.id = dto.getId();
