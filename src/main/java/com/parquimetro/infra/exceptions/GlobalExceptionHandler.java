@@ -2,6 +2,7 @@ package com.parquimetro.infra.exceptions;
 
 import com.parquimetro.domain.dto.MessageError;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -74,6 +75,18 @@ public class GlobalExceptionHandler {
                 List.of(MessageError.builder()
                         .erro("Erro no sistema.")
                         .detalhe("Requisição inválida, preencha corretamente.")
+                        .build()),
+                HttpStatus.BAD_REQUEST.value()
+        );
+        return new ResponseEntity<>(ListErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<ListErrorResponse> handleOptimisticLockingFailureException(OptimisticLockingFailureException e) {
+        ListErrorResponse ListErrorResponse = new ListErrorResponse(
+                List.of(MessageError.builder()
+                        .erro("Erro no sistema.")
+                        .detalhe("O arquivo já está sendo utilizado por outro usuário. Tente novamente!")
                         .build()),
                 HttpStatus.BAD_REQUEST.value()
         );
