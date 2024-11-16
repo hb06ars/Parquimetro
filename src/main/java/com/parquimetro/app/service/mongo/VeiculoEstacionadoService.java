@@ -6,6 +6,7 @@ import com.parquimetro.infra.exceptions.ObjectNotFoundException;
 import com.parquimetro.infra.repository.mongo.VeiculoEstacionadoCustomRepository;
 import com.parquimetro.infra.repository.mongo.VeiculoEstacionadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,8 +29,18 @@ public class VeiculoEstacionadoService {
     }
 
     @Transactional
-    public VeiculoEstacionado save(VeiculoEstacionado veiculo) {
-        return repository.save(veiculo);
+    public VeiculoEstacionado save(VeiculoEstacionado veiculoSalvar) {
+        try{
+            return repository.save(veiculoSalvar);
+        } catch(OptimisticLockingFailureException e){
+            var veiculoExistente = repository.findById(veiculoSalvar.getId()).orElse(null);
+            if(veiculoExistente != null){
+                atualizarPayloadVeiculoEstacionado(veiculoExistente, veiculoSalvar, true);
+                return repository.save(veiculoExistente);
+            } else{
+                throw new RuntimeException("Houve um problema para salvar o veículo, tente novamente!");
+            }
+        }
     }
 
     @Transactional(readOnly = true)
@@ -44,30 +55,41 @@ public class VeiculoEstacionadoService {
     }
 
     @Transactional
-    public VeiculoEstacionado update(String numeroProcesso, VeiculoEstacionado veiculoAtualizado) {
-        Optional<VeiculoEstacionado> veiculoExistente = repository.findByNumeroProcesso(numeroProcesso);
-
-        if (veiculoExistente.isPresent()) {
-            VeiculoEstacionado veiculo = veiculoExistente.get();
-            veiculo.setPlaca(veiculoAtualizado.getPlaca());
-            veiculo.setLocal(veiculoAtualizado.getLocal());
-            veiculo.setHoraEntrada(veiculoAtualizado.getHoraEntrada());
-            veiculo.setHoraSaida(veiculoAtualizado.getHoraSaida());
-            veiculo.setValor(veiculoAtualizado.getValor());
-            veiculo.setStatusPagamentoEnum(veiculoAtualizado.getStatusPagamentoEnum());
-
-            return repository.save(veiculo);
-        } else {
-            throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
+    public VeiculoEstacionado update(String numeroProcesso, VeiculoEstacionado veiculoSalvar) {
+        try{
+            Optional<VeiculoEstacionado> veiculoExistente = repository.findByNumeroProcesso(numeroProcesso);
+            if (veiculoExistente.isPresent()) {
+                atualizarPayloadVeiculoEstacionado(veiculoExistente.get(), veiculoSalvar, false);
+                return repository.save(veiculoExistente.get());
+            } else {
+                throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
+            }
+        } catch(OptimisticLockingFailureException e){
+            var veiculoExistente = repository.findById(veiculoSalvar.getId()).orElse(null);
+            if(veiculoExistente != null){
+                atualizarPayloadVeiculoEstacionado(veiculoExistente, veiculoSalvar, true);
+                return repository.save(veiculoExistente);
+            } else{
+                throw new RuntimeException("Houve um problema para atualizar o veículo, tente novamente!");
+            }
         }
     }
 
     @Transactional
     public void delete(String numeroProcesso) {
-        if (repository.existsByNumeroProcesso(numeroProcesso)) {
-            repository.deleteByNumeroProcesso(numeroProcesso);
-        } else {
-            throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
+        try{
+            if (repository.existsByNumeroProcesso(numeroProcesso)) {
+                repository.deleteByNumeroProcesso(numeroProcesso);
+            } else {
+                throw new RuntimeException("Veículo com Número do Processo " + numeroProcesso + " não encontrado.");
+            }
+        } catch(OptimisticLockingFailureException e){
+            var veiculoExistente = repository.findById(numeroProcesso).orElse(null);
+            if(veiculoExistente != null){
+                repository.deleteByNumeroProcesso(numeroProcesso);
+            } else{
+                throw new RuntimeException("O veículo já foi removido!");
+            }
         }
     }
 
@@ -82,5 +104,17 @@ public class VeiculoEstacionadoService {
     public Page<VeiculoEstacionado> buscaPaginada(RequestVeiculoEstacionadoDTO dto, int page, int size, String sortField, String sortDirection) {
         Pageable pageable = PageRequest.of(page, size);
         return customRepository.findAllByCriteria(dto, pageable, sortField, sortDirection);
+    }
+
+    private static void atualizarPayloadVeiculoEstacionado(VeiculoEstacionado veiculo, VeiculoEstacionado veiculoAtualizado, boolean atualizarVersao) {
+        if(atualizarVersao)
+            veiculo.setVersion(veiculoAtualizado.getVersion() + 1);
+        veiculo.setNumeroProcesso(veiculoAtualizado.getNumeroProcesso());
+        veiculo.setPlaca(veiculoAtualizado.getPlaca());
+        veiculo.setHoraEntrada(veiculoAtualizado.getHoraEntrada());
+        veiculo.setHoraSaida(veiculoAtualizado.getHoraSaida());
+        veiculo.setStatusPagamentoEnum(veiculoAtualizado.getStatusPagamentoEnum());
+        veiculo.setLocal(veiculoAtualizado.getLocal());
+        veiculo.setValor(veiculoAtualizado.getValor());
     }
 }
