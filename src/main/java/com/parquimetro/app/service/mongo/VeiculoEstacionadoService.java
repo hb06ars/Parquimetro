@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,19 +27,23 @@ public class VeiculoEstacionadoService {
         this.customRepository = customRepository;
     }
 
+    @Transactional
     public VeiculoEstacionado save(VeiculoEstacionado veiculo) {
         return repository.save(veiculo);
     }
 
+    @Transactional(readOnly = true)
     public List<VeiculoEstacionado> findAll() {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public VeiculoEstacionado findByNumeroProcesso(String numeroProcesso) {
         Optional<VeiculoEstacionado> obj = repository.findByNumeroProcesso(numeroProcesso);
         return obj.orElse(null);
     }
 
+    @Transactional
     public VeiculoEstacionado update(String numeroProcesso, VeiculoEstacionado veiculoAtualizado) {
         Optional<VeiculoEstacionado> veiculoExistente = repository.findByNumeroProcesso(numeroProcesso);
 
@@ -57,6 +62,7 @@ public class VeiculoEstacionadoService {
         }
     }
 
+    @Transactional
     public void delete(String numeroProcesso) {
         if (repository.existsByNumeroProcesso(numeroProcesso)) {
             repository.deleteByNumeroProcesso(numeroProcesso);
@@ -65,12 +71,14 @@ public class VeiculoEstacionadoService {
         }
     }
 
+    @Transactional(readOnly = true)
     public VeiculoEstacionado findByPlacaPendentePagamento(String placa) {
         return repository.findByPlacaPendentePagamento(placa).orElseThrow( () ->
             new ObjectNotFoundException("Veículo com Número de Placa " + placa + " pendente não encontrado.")
         );
     }
 
+    @Transactional(readOnly = true)
     public Page<VeiculoEstacionado> buscaPaginada(RequestVeiculoEstacionadoDTO dto, int page, int size, String sortField, String sortDirection) {
         Pageable pageable = PageRequest.of(page, size);
         return customRepository.findAllByCriteria(dto, pageable, sortField, sortDirection);

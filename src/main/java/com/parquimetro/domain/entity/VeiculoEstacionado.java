@@ -4,6 +4,7 @@ import com.parquimetro.domain.dto.VeiculoEstacionadoDTO;
 import com.parquimetro.domain.enums.StatusPagamentoEnum;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,6 +23,9 @@ public class VeiculoEstacionado  implements Serializable {
 
     @Id
     private String id;
+
+    @Version
+    private Long version;
 
     @Indexed(unique = true)
     private String numeroProcesso;
