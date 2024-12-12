@@ -1,6 +1,5 @@
 package com.parquimetro.app.rest;
 
-import com.parquimetro.app.service.mongo.VeiculoEstacionadoService;
 import com.parquimetro.app.service.redis.TarifaRedisService;
 import com.parquimetro.domain.dto.TarifaDTO;
 import com.parquimetro.domain.util.HttpStatusCodes;
@@ -23,13 +22,10 @@ import java.math.BigDecimal;
 public class TarifaController {
 
     @Autowired
-    private VeiculoEstacionadoService service;
-
-    @Autowired
     private TarifaRedisService tarifaRedisService;
 
-    @Operation( summary = "Cria ou atualiza o valor da tarifa no Cache.",
-                description = "Cria/Atualiza e retorna os detalhes da Tarifa do Cache com ID sempre sendo valor 1L.")
+    @Operation(summary = "Cria ou atualiza o valor da tarifa no Cache.",
+            description = "Cria/Atualiza e retorna os detalhes da Tarifa do Cache com ID sempre sendo valor 1L.")
     @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Tarifa salva/atualizada")
     @PostMapping("/tarifa")
     public ResponseEntity<@Valid TarifaDTO> tarifa(
@@ -42,8 +38,8 @@ public class TarifaController {
                         .build())));
     }
 
-    @Operation( summary = "Busca o valor da tarifa pelo Cache.",
-                description = "Retorna os detalhes da Tarifa no Cache.")
+    @Operation(summary = "Busca o valor da tarifa pelo Cache.",
+            description = "Retorna os detalhes da Tarifa no Cache.")
     @ApiResponse(responseCode = HttpStatusCodes.OK, description = "Tarifa encontrada no Cache.")
     @ApiResponse(responseCode = HttpStatusCodes.NOT_FOUND, description = "Nenhuma tarifa encontrada no Cache.")
     @GetMapping("/tarifa")
