@@ -99,7 +99,7 @@
           const data = await response.json();
           document.getElementById('valorTarifa').value = data.valorTarifa.toFixed(2);
         } else {
-          mensagem('Erro ao buscar o valor da tarifa.');
+          mensagem('Valor da tarifa não encontrado.');
         }
       } catch (error) {
         mensagem('Erro na conexão com o servidor: ' + error);
