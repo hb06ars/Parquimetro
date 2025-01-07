@@ -26,11 +26,15 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class VeiculoEstacionadoControllerTest {
     @Mock
@@ -61,27 +65,33 @@ class VeiculoEstacionadoControllerTest {
 
     @Test
     void testSaveorupdate() throws IOException {
-        when(preencherDadosUseCase.execute(any(VeiculoEstacionadoDTO.class))).thenReturn(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
+        VeiculoEstacionadoDTO veiculoEstacionadoDTO = new VeiculoEstacionadoDTO(gerarVeiculoEstacionado());
+        when(preencherDadosUseCase.execute(any(VeiculoEstacionadoDTO.class))).thenReturn(veiculoEstacionadoDTO);
         when(objectMapper.writeValueAsString(any(Object.class))).thenReturn("writeValueAsStringResponse");
 
-        ResponseEntity<VeiculoEstacionadoDTO> result = veiculoEstacionadoController.saveorupdate(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
+        ResponseEntity<VeiculoEstacionadoDTO> result = veiculoEstacionadoController.saveorupdate(veiculoEstacionadoDTO);
         verify(producer).sendMessage(any(), anyString());
-        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoDTO>(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO), null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
+        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoDTO>(veiculoEstacionadoDTO, null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
     }
 
     @Test
     void testFindByNumeroProcesso() {
-        when(service.findByNumeroProcesso(anyString())).thenReturn(new VeiculoEstacionado("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
-        when(veiculoRedisService.save(any(VeiculoEstacionadoDTO.class))).thenReturn(new VeiculoEstacionadoRedis("numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
-        when(veiculoRedisService.findById(anyString())).thenReturn(new VeiculoEstacionadoRedis("numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
-        when(veiculoEstacionadoService.findByNumeroProcesso(anyString())).thenReturn(new VeiculoEstacionado("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
+        VeiculoEstacionado veiculoEstacionado = gerarVeiculoEstacionado();
+        VeiculoEstacionadoRedis veiculoEstacionadoRedis = gerarVeiculoEstacionadoRedis();
+
+        when(service.findByNumeroProcesso(anyString())).thenReturn(veiculoEstacionado);
+        when(veiculoRedisService.save(any(VeiculoEstacionadoDTO.class))).thenReturn(veiculoEstacionadoRedis);
+        when(veiculoRedisService.findById(anyString())).thenReturn(veiculoEstacionadoRedis);
+        when(veiculoEstacionadoService.findByNumeroProcesso(anyString())).thenReturn(veiculoEstacionado);
 
         ResponseEntity<VeiculoEstacionadoRedis> result = veiculoEstacionadoController.findByNumeroProcesso("numeroProcesso");
-        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoRedis>(new VeiculoEstacionadoRedis("numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO), null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
+        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoRedis>(veiculoEstacionadoRedis, null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
+
     }
 
     @Test
     void testFindAll() {
+        VeiculoEstacionado veiculoEstacionado = gerarVeiculoEstacionado();
         Iterable<VeiculoEstacionadoRedis> cache = Collections.singletonList(VeiculoEstacionadoRedis.builder()
                 .horaEntrada(LocalDateTime.now())
                 .horaSaida(null)
@@ -90,10 +100,10 @@ class VeiculoEstacionadoControllerTest {
                 .valor(BigDecimal.ONE)
                 .local("A1")
                 .placa("ASD").build());
-        when(service.findAll()).thenReturn(List.of(new VeiculoEstacionado("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO)));
+        when(service.findAll()).thenReturn(List.of(veiculoEstacionado));
         when(veiculoRedisService.saveAll(any(Iterable.class))).thenReturn(cache);
         when(veiculoRedisService.findAll()).thenReturn(cache);
-        when(veiculoEstacionadoService.findAll()).thenReturn(List.of(new VeiculoEstacionado("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO)));
+        when(veiculoEstacionadoService.findAll()).thenReturn(List.of(veiculoEstacionado));
 
         ResponseEntity<Iterable<VeiculoEstacionadoRedis>> result = veiculoEstacionadoController.findAll();
         Assertions.assertEquals(new ResponseEntity<Iterable<VeiculoEstacionadoRedis>>(null, null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
@@ -101,26 +111,35 @@ class VeiculoEstacionadoControllerTest {
 
     @Test
     void testDevolver() throws IOException {
-        when(devolverVeiculoUseCase.execute(anyString())).thenReturn(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
+        VeiculoEstacionadoDTO veiculoEstacionadoDTO = new VeiculoEstacionadoDTO(gerarVeiculoEstacionado());
+        when(devolverVeiculoUseCase.execute(anyString())).thenReturn(veiculoEstacionadoDTO);
 
         ResponseEntity<VeiculoEstacionadoDTO> result = veiculoEstacionadoController.devolver("placa");
-        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoDTO>(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO), null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
+        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoDTO>(veiculoEstacionadoDTO, null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
     }
 
     @Test
     void testPagar() throws IOException {
-        when(pagarVeiculoUseCase.execute(anyString())).thenReturn(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO));
+        VeiculoEstacionadoDTO veiculoEstacionadoDTO = new VeiculoEstacionadoDTO(gerarVeiculoEstacionado());
+        when(pagarVeiculoUseCase.execute(anyString())).thenReturn(veiculoEstacionadoDTO);
 
         ResponseEntity<VeiculoEstacionadoDTO> result = veiculoEstacionadoController.pagar("placa");
-        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoDTO>(new VeiculoEstacionadoDTO("id", "numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), new BigDecimal(0), StatusPagamentoEnum.PENDENTE_PAGAMENTO), null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
+        Assertions.assertEquals(new ResponseEntity<VeiculoEstacionadoDTO>(veiculoEstacionadoDTO, null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
     }
 
     @Test
     void testBuscaPaginada() {
+        RequestVeiculoEstacionadoDTO requestVeiculoEstacionadoDTO = new RequestVeiculoEstacionadoDTO();
+        requestVeiculoEstacionadoDTO.setNumeroProcesso(UUID.randomUUID().toString());
+        requestVeiculoEstacionadoDTO.setPlaca("ASW1455");
+        requestVeiculoEstacionadoDTO.setLocal("A10");
+        requestVeiculoEstacionadoDTO.setHorario(LocalDateTime.now());
+        requestVeiculoEstacionadoDTO.setStatusPagamentoEnum(StatusPagamentoEnum.PENDENTE_PAGAMENTO);
+
         when(service.buscaPaginada(any(RequestVeiculoEstacionadoDTO.class), anyInt(), anyInt(), anyString(), anyString())).thenReturn(null);
         when(veiculoEstacionadoService.buscaPaginada(any(RequestVeiculoEstacionadoDTO.class), anyInt(), anyInt(), anyString(), anyString())).thenReturn(null);
 
-        ResponseEntity<Page<VeiculoEstacionado>> result = veiculoEstacionadoController.buscaPaginada(new RequestVeiculoEstacionadoDTO("numeroProcesso", "placa", "local", LocalDateTime.of(2024, Month.NOVEMBER, 12, 23, 8, 30), StatusPagamentoEnum.PENDENTE_PAGAMENTO), 0, 0, "sortField", "sortDirection");
+        ResponseEntity<Page<VeiculoEstacionado>> result = veiculoEstacionadoController.buscaPaginada(requestVeiculoEstacionadoDTO, 0, 0, "sortField", "sortDirection");
         Assertions.assertEquals(new ResponseEntity<Page<VeiculoEstacionado>>(null, null, HttpStatus.OK).getStatusCode(), result.getStatusCode());
     }
 
@@ -129,6 +148,32 @@ class VeiculoEstacionadoControllerTest {
         veiculoEstacionadoController.deletar("numeroProcesso");
         verify(deletarRegistroUseCase).execute(anyString());
     }
+
+    VeiculoEstacionado gerarVeiculoEstacionado() {
+        VeiculoEstacionado veiculoEstacionado = new VeiculoEstacionado();
+        veiculoEstacionado.setId("asdadfretert23423");
+        veiculoEstacionado.setNumeroProcesso(UUID.randomUUID().toString());
+        veiculoEstacionado.setPlaca("AVC5422");
+        veiculoEstacionado.setLocal("A10");
+        veiculoEstacionado.setStatusPagamentoEnum(StatusPagamentoEnum.PENDENTE_PAGAMENTO);
+        veiculoEstacionado.setValor(BigDecimal.valueOf(10L));
+        veiculoEstacionado.setHoraEntrada(LocalDateTime.now());
+        veiculoEstacionado.setHoraSaida(null);
+        return veiculoEstacionado;
+    }
+
+    VeiculoEstacionadoRedis gerarVeiculoEstacionadoRedis() {
+        VeiculoEstacionadoRedis veiculoEstacionado = new VeiculoEstacionadoRedis();
+        veiculoEstacionado.setNumeroProcesso(UUID.randomUUID().toString());
+        veiculoEstacionado.setPlaca("AVC5422");
+        veiculoEstacionado.setLocal("A10");
+        veiculoEstacionado.setStatusPagamentoEnum(StatusPagamentoEnum.PENDENTE_PAGAMENTO);
+        veiculoEstacionado.setValor(BigDecimal.valueOf(10L));
+        veiculoEstacionado.setHoraEntrada(LocalDateTime.now());
+        veiculoEstacionado.setHoraSaida(null);
+        return veiculoEstacionado;
+    }
+
+
 }
 
-//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme
