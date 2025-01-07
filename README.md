@@ -8,9 +8,10 @@
 - Exemplo 3: se a tarifa for igual a R$20,00/hora : E o veículo permanecer por 1h01min -> será cobrado R$40,00.
 
 ### ARQUITETURA
-Linguagem: Java 17
-Framework: Spring Boot
-Banco de dados: MongoDB e Redis
+- Linguagem: Java 17
+- Framework: Spring Boot
+- Banco de dados: MongoDB e Redis
+- Mensageria: Kafka
 
 ### FLUXO
 - A persistência de dados é feita da seguinte forma:
@@ -27,7 +28,7 @@ A requisição é feita por um GET com RequestParamter passando o número da pla
 - Quando o usuário clicar em Pagar, será chamado uma requisição via POST com RequestParamter passando o número da placa.
 Nela é feito o calculo, é atualizado no MongoDB com status = PAGO e o registro é removido do cache.
 
-- Pode ser testado subindo o Docker, em seguida o projeto e acessando no seu navegador pela url: http://localhost:8080/index.html
+- Pode ser testado subindo o docker-compose.yaml, em seguida o projeto e acessando no seu navegador pela url: http://localhost:8080/index.html
 
 
 ### INSTALAÇÃO
@@ -36,6 +37,7 @@ Nela é feito o calculo, é atualizado no MongoDB com status = PAGO e o registro
 - O Kafka Drop utilizamos para visualizar os tópicos pelo navegador. (http://localhost:9000/)
 - URL para utilizar no postman e startar a aplicação (POST e o BODY): http://localhost:8080/
 - Sonar URL: http://localhost:9008/
+- jMeter: Caso queira fazer testes de stress é possível utilizando jMeter.
 - Cache: pode ser utilizado o Redis Insight conectando com a url: 127.0.0.1:6379
 - Swagger: http://localhost:8080/swagger-ui.html
 - Teste da Aplicação: http://localhost:8080/index.html
@@ -61,7 +63,7 @@ Nela é feito o calculo, é atualizado no MongoDB com status = PAGO e o registro
 ### URI Kafka Drop: <br>
     http://localhost:9000/
 
-### ERRO DE AUTENTICAÇÃO
+### CASO HAJA ERRO DE AUTENTICAÇÃO NO MONGODB
     Caso haja algum erro de persistência no Mongo, pode ocorrer devido a permissão de salvar:
     Abra o terminal do Mongo, para testar: mongo --version
     Execute os comandos:
